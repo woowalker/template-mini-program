@@ -1,0 +1,14 @@
+<c-scroller
+  bind:refresh="onRefresh"
+  bind:loadmore="onLoadMore">
+  <view
+    wx:for="{{records}}"
+    wx:key="id"
+    data-value="{{item.id}}"
+    class="record bg-fff box-shadow bra-4px mg-t20">
+    <text class="fz-28 cr-333">订单编号<text class="fw-bold pd-l20">{{item.code}}</text></text>
+    <text class="fz-28 cr-333">订单时间<text class="fw-bold pd-l20">{{item.time}}</text></text>
+    <text class="fz-28 cr-333">订单金额<text class="cr-error pd-l20">￥{{item.rechargeAmount}}</text></text>
+    <text class="record__status fz-24 cr-666 {{item.status === ECARD_RECORD_STATUS_FAIL ? 'cr-error' : ''}}">{{item.statusFont}}</text>
+  </view>
+</c-scroller>

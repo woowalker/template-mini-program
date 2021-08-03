@@ -1,0 +1,46 @@
+<view class="station bg-fff">
+  <view class="station__header">
+    <c-imager src="/images/station/location.png" class="station__header-icon" />
+    <text class="fz-28 cr-333 fw-bold mg-l20">{{station.stationName}}</text>
+  </view>
+  <text class="fz-24 cr-333">{{station.address}}</text>
+  <view bindtap="handleFavorite" hover-class="hover-class" class="station__favorite">
+    <c-imager wx:if="{{favorite}}" src="/images/station/favorite-on.png" class="station__favorite-icon" />
+    <c-imager wx:else src="/images/station/favorite.png" class="station__favorite-icon" />
+  </view>
+</view>
+
+<view class="scroller">
+  <c-scroller
+    loadmoreEnabled="{{false}}"
+    bind:refresh="onRefresh">
+    <view
+      wx:for="{{stakes}}"
+      wx:key="stakeCode"
+      class="charge-stake bg-fff box-shadow bra-4px mg-t20">
+      <view data-value="{{item.stakeCode}}" bindtap="navToStakeDetail" class="charge-stake__zone">
+        <view class="charge-stake__status {{item.stakeStatus === STATUS_OFF ? 'charge-stake__status-off' : ''}}">
+          <text class="fz-24 cr-333">编号<text class="pd-l20">{{item.stakeCode}}</text></text>
+          <text class="fz-24 cr-333">状态<text class="charge-stake__status-font {{item.statusClass}} pd-l20">{{item.statusFont}}</text></text>
+        </view>
+        <c-imager src="{{item.statusImg}}" class="charge-stake__status-pic" />
+      </view>
+      <view wx:if="{{item.stakeStatus === STATUS_ON}}" class="charge-stake__tool">
+        <view
+          data-value="{{item.stakeCode}}"
+          bindtap="navToPreOrder"
+          hover-class="hover-class"
+          class="charge-stake__tool-btn">
+          <text class="fz-28 cr-333">马上预约</text>
+        </view>
+        <view
+          data-value="{{item.stakeCode}}"
+          bindtap="navToChargeMode"
+          hover-class="hover-class"
+          class="charge-stake__tool-btn br-l">
+          <text class="fz-28 cr-333">立即充电</text>
+        </view>
+      </view>
+    </view>
+  </c-scroller>
+</view>

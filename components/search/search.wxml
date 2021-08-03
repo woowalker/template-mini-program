@@ -1,0 +1,10 @@
+<view class="c-search pd-h20 bg-fff box-shadow bra-4px" style="{{style}}">
+  <c-imager src="/images/nearby/search-icon.png" class="c-search__icon" />
+  <input
+    type="text"
+    value="{{searchKey}}"
+    bindinput="handleSearchInput"
+    bindconfirm="handleSearch"
+    class="c-search__input"
+    placeholder="{{placeholder}}" />
+</view>

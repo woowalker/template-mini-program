@@ -1,0 +1,110 @@
+.station {
+  position: relative;
+  width: 100%;
+  height: 112rpx;
+  padding: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.station__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.station__header-icon {
+  width: 20rpx;
+  height: 30rpx;
+}
+
+.station__favorite {
+  height: 112rpx;
+  line-height: 112rpx;
+  padding: 0 20rpx;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.station__favorite-icon {
+  width: 44rpx;
+  height: 40rpx;
+  vertical-align: middle;
+}
+
+.scroller {
+  width: 100%;
+  height: calc(100% - 112rpx);
+  padding-bottom: 20rpx;
+}
+
+.charge-stake {
+  position: relative;
+  width: calc(100% - 40rpx);
+  margin: 20rpx auto 0 auto;
+}
+
+.charge-stake__zone {
+  width: 100%;
+  height: 164rpx;
+  padding: 40rpx 100rpx 40rpx 40rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.charge-stake__status {
+  width: calc(100% - 86rpx);
+  height: 100%;
+  padding-right: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.charge-stake__status-off text {
+  color: #999999;
+}
+
+.charge-stake__status-font.on {
+  color: #2DD32D;
+}
+
+.charge-stake__status-font.off {
+  color: #999999;
+}
+
+.charge-stake__status-font.busy {
+  color: #4B8AEB;
+}
+
+.charge-stake__status-font.charging {
+  color: #D7D113;
+}
+
+.charge-stake__status-pic {
+  width: 86rpx;
+  height: 84rpx;
+}
+
+.charge-stake__tool {
+  width: 100%;
+  height: 68rpx;
+  padding-bottom: 40rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.charge-stake__tool-btn {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}

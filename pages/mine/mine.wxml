@@ -1,0 +1,51 @@
+<c-nav-header title="个人中心" />
+<c-tabbar-container>
+  <view class="pd-20">
+    <view class="nickname bg-fff box-shadow bra-4px">
+      <c-imager allow-preview src="{{userinfo ? userinfo.avatarUrl : '/images/mine/avatar.png'}}" class="nickname__pic" />
+      <view bindtap="navToLogin" hover-class="hover-class" class="nickname__detail">
+        <text class="fz-28 cr-333 fw-bold">{{userinfo ? userinfo.nickName : '请登录'}}</text>
+        <text wx:if="{{userinfo}}" class="fz-24 cr-666">{{userinfo ? userinfo.tel : ''}}</text>
+        <text wx:else class="fz-24 cr-666">点我登录</text>
+      </view>
+    </view>
+    <view class="charge-card pos-relative box-shadow mg-t20">
+      <c-imager src="/images/mine/ecard-bg.png" class="charge-card__bg" />
+      <view class="charge-card__title">
+        <text class="fz-24 cr-fff">运营商充电卡</text>
+        <text class="fz-24 cr-fff">卡号：{{eCard ? eCard.cardNo : '****....****'}}</text>
+      </view>
+      <view class="charge-card__amount">
+        <view class="charge-card__amount-left">
+          <text class="fz-28 cr-fff">可用余额</text>
+          <text class="fz-40 cr-fff fw-bold">{{eCard ? eCard.balance : '****'}} <text class="fz-28 cr-fff">元</text></text>
+        </view>
+        <View wx:if="{{eCard}}" class="charge-card__amount-right">
+          <view bindtap="handleECardManage" hover-class="hover-class" class="recharge-btn text-center br-tranparent">
+            <text class="fz-28 fw-bold cr-fff line-height-unset">管理</text>
+          </view>
+          <view bindtap="handleECardCharge" hover-class="hover-class" class="recharge-btn text-center br-white">
+            <text class="fz-28 fw-bold cr-fff line-height-unset">充值</text>
+          </view>
+        </View>
+        <View wx:else class="charge-card__amount-right">
+          <view bindtap="handleECardBuy" hover-class="hover-class" class="recharge-btn text-center br-white">
+            <text class="fz-28 fw-bold cr-fff line-height-unset">购买</text>
+          </view>
+        </View>
+      </view>
+    </view>
+    <view class="user-menu bg-fff box-shadow bra-4px mg-t20">
+      <view
+        wx:for="{{menus}}"
+        wx:key="value"
+        data-value="{{item.value}}"
+        bindtap="navToPage"
+        hover-class="hover-class"
+        class="user-menu__zone">
+        <c-imager src="{{item.icon}}" class="user-menu__zone-img" />
+        <text class="fz-24 cr-333">{{item.text}}</text>
+      </view>
+    </view>
+  </view>
+</c-tabbar-container>

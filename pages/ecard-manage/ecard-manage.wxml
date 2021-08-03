@@ -1,0 +1,62 @@
+<c-search
+  bind:search="handleSearch"
+  placeholder="请输入要查找的运营商"
+  style="margin-top: 20rpx;" />
+
+<view class="tab-bar">
+  <mp-tabs
+    tabs="{{tabs}}"
+    activeTab="{{activeTab}}"
+    bindtabclick="onChange"
+    bindchange="onChange"
+    tab-underline-color="#4B8AEB"
+    tab-background-color="#fafafa"
+    tab-class="tab-bar__tab"
+    active-class="tab-bar__tab-active"
+    swiper-class="tab-bar__swiper" />
+</view>
+
+<view class="ecards {{activeTab ===1 ? 'tabRightShow' : ''}}">
+  <view wx:for="{{tabs}}" wx:key="title" wx:for-item="tab" class="ecard-manage">
+    <c-scroller
+      extraData="{{tab.isbuy ? 'myCards' : 'salesCards'}}"
+      bind:refresh="onRefresh"
+      bind:loadmore="onLoadMore"
+      class="{{tab.isbuy ? 'scrollerMyCards' : 'scrollerSalesCard'}}">
+      <view
+        wx:for="{{tab.isbuy ? myCards : salesCards}}"
+        wx:key="cardNo"
+        class="ecard-manage__card bg-fff box-shadow bra-4px">
+        <view class="ecard-manage__card-main">
+          <c-imager src="/images/mine/operator-logo.png" class="ecard-manage__card-logo" />
+          <view class="ecard-manage__card-title">
+            <text class="fz-28 cr-333 full-width text-ellipsis mg-b20">{{item.tenantName}}</text>
+            <text class="fz-24 cr-error">充值优惠：{{item.discounts || '暂无优惠活动'}}</text>
+          </view>
+          <view wx:if="{{tab.isbuy}}" class="ecard-manage__card-charge">
+            <text class="fz-28 cr-primary fw-bold mg-b20">{{item.balance}}<text class="fz-24 cr-333">元</text></text>
+            <view
+              data-value="{{item.tenantCode}}"
+              bindtap="handleECardCharge"
+              hover-class="hover-class"
+              class="ecard-manage__card-charge--btn text-center bg-primary">
+              <text class="fz-24 cr-fff line-height-unset">充值</text>
+            </view>
+          </view>
+          <view wx:else class="ecard-manage__card-charge">
+            <view
+              data-value="{{item.tenantCode}}"
+              bindtap="handleECardBuy"
+              hover-class="hover-class"
+              class="ecard-manage__card-charge--btn text-center bg-primary">
+              <text class="fz-24 cr-fff line-height-unset">购买</text>
+            </view>
+          </view>
+        </view>
+        <view class="mg-t20">
+          <c-expand-text text="使用范围：{{item.useRange || '暂无使用范围数据'}}" />
+        </view>
+      </view>
+    </c-scroller>
+  </view>
+</view>

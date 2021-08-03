@@ -1,0 +1,9 @@
+.c-container,
+.c-container__inner {
+  width: 100%;
+  height: 100%;
+}
+
+.c-container__inner {
+  padding: 88rpx 0 98rpx 0;
+}

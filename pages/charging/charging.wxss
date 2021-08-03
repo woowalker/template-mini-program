@@ -1,0 +1,36 @@
+.header {
+  width: 100%;
+  height: 100rpx;
+  line-height: 100rpx;
+  padding: 0 20rpx;
+}
+
+.charging {
+  width: 100%;
+  margin-top: 80rpx;
+  padding: 0 20rpx;
+  overflow: hidden;
+}
+
+.charging-car {
+  width: 364rpx;
+  height: 700rpx;
+  float: left;
+}
+
+.charging-detail {
+  width: calc(100% - 364rpx);
+  height: 700rpx;
+  padding: 50rpx 0 0 112rpx;
+  float: right;
+}
+
+.charging-detail__font {
+  display: block;
+}
+
+.charging-stop {
+  width: 100%;
+  padding: 0 20rpx;
+  margin-top: 150rpx;
+}

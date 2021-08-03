@@ -1,0 +1,9 @@
+<view class="c-collapse {{visible ? 'expanded' : ''}} {{border ? 'border' : ''}}">
+  <view bindtap="handleToggleVisible" class="c-collapse__title bg-fff pd-h20">
+    <view class="c-collapse__title-font"><text class="fz-28 cr-333">{{title}}</text></view>
+    <c-imager src="/images/common/back.png" class="c-collapse__title-icon" />
+  </view>
+  <view class="c-collapse__body">
+    <text class="fz-28 cr-333 line-height-unset pd-20">{{content}}</text>
+  </view>
+</view>

@@ -1,0 +1,14 @@
+<view class="c-frame-animation {{visible ? 'show' : ''}}">
+  <view class="c-frame-animation__container">
+    <view class="pos-relative" style="{{style}}">
+      <image
+        wx:for="{{frames}}"
+        wx:key="*this"
+        src="{{item}}"
+        class="c-frame-animation__img {{curr === index ? 'active' : ''}}" />
+    </view>
+    <view class="text-center pd-b20">
+      <text class="fz-28 cr-666">{{text}}</text>
+    </view>
+  </view>
+</view>

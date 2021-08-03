@@ -1,0 +1,9 @@
+<view class="c-expanded-text" style="{{style}}">
+  <view class="c-expanded-text__font">
+    <text wx:if="{{!expanded}}" class="fz-24 cr-999 full-width text-ellipsis">{{text}}</text>
+    <text wx:else class="fz-24 cr-999">{{text}}</text>
+  </view>
+  <view bindtap="toggleExpand" hover-class="hover-class" class="c-expanded-text__zone">
+    <c-imager src="/images/common/back.png" class="c-expanded-text__zone-img {{expanded ? 'expanded' : ''}}" />
+  </view>
+</view>

@@ -1,0 +1,5 @@
+<view class="c-container" style="padding-top: {{statusBarHeight}}px;">
+  <view class="c-container__inner" style="{{style}}">
+    <slot></slot>
+  </view>
+</view>

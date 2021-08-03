@@ -1,0 +1,54 @@
+.header {
+  width: 100%;
+  height: 100rpx;
+  line-height: 100rpx;
+  padding: 0 20rpx;
+}
+
+.stake {
+  width: 100%;
+  height: calc(100% - 100rpx);
+}
+
+.stake-empty {
+  width: 100%;
+  height: calc(100% - 100rpx);
+  padding-bottom: 40%;
+}
+
+.stake__font.on {
+  color: #2DD32D;
+}
+
+.stake__font.off {
+  color: #999999;
+}
+
+.stake__font.busy {
+  color: #4B8AEB;
+}
+
+.stake__font.charging {
+  color: #D7D113;
+}
+
+.stake__img {
+  display: block;
+  width: 200rpx;
+  height: 200rpx;
+  margin: 170rpx auto;
+}
+
+.stake__btn {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stake__btn .btn-primary__block {
+  display: flex;
+  flex: 1;
+  margin: 0 10rpx;
+}

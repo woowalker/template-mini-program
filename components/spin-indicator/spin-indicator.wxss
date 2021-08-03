@@ -1,0 +1,9 @@
+.c-spin-indicator .weui-loadmore {
+  margin: 0;
+}
+
+.c-spin-indicator .weui-loadmore__tips {
+  font-size: 14px;
+  color: #999999;
+  padding-left: 4px;
+}

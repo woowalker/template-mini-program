@@ -1,0 +1,28 @@
+.charge-detail {
+  width: calc(100% - 40rpx);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 40rpx;
+}
+
+.divider {
+  width: 100%;
+  height: 1rpx;
+  background-color: #EFEFEF;
+}
+
+.charge-detail__btn,
+.charge-detail__btn-pay {
+  display: inline-block;
+  width: 200rpx !important;
+  height: 80rpx;
+  line-height: 80rpx;
+  margin-left: 20rpx !important;
+  border-radius: 40rpx;
+  border: 1rpx solid #333333;
+}
+
+.charge-detail__btn-pay {
+  background-color: #4B8AEB;
+  border: 1rpx solid #4B8AEB;
+}

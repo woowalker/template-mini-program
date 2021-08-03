@@ -1,0 +1,1 @@
+<mp-loading type="circle" tips="{{tips}}" extClass="c-spin-indicator" style="width: 100%;"></mp-loading>

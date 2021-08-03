@@ -1,0 +1,14 @@
+<import src="/templates/empty-page/index.wxml" />
+
+<view class="bg-fff">
+  <text class="fz-32 cr-333 fw-bold mg-t40 mg-b20 pd-h20">常见问题</text>
+  <c-collapse wx:for="{{list}}" wx:key="question" title="{{(index + 1) + '、' + item.question}}" content="{{item.answer}}" />
+  <view wx:if="{{!list.length}}" class="contact__empty">
+    <template is="empty-page"></template>
+  </view>
+</view>
+<view class="mg-v40 text-center">
+  <button open-type="contact">
+    <text class="fz-28 cr-primary">联系客服</text>
+  </button>
+</view>

@@ -1,0 +1,36 @@
+<c-cell-input
+  title="充电桩号"
+  value="{{stakeCode}}"
+  bindinput="setDeviceNumber"
+  placeholder="请输入充电桩号">
+  <view
+    slot="suffix"
+    bindtap="handleScancode"
+    hover-class="hover-class"
+    class="error-report__scancode pd-h20">
+    <c-imager src="/images/mine/scan-code.png" class="error-report__scancode-img" />
+  </view>
+</c-cell-input>
+
+<view class="error-report__desc mg-t20 pd-20 bg-fff">
+  <text class="fz-28 cr-333 fw-bold">问题描述</text>
+  <textarea
+    value="{{describe}}"
+    bindinput="setDescribe"
+    class="error-report__desc-input fz-28 line-height-1 pd-t20"
+    placeholder="请对问题进行详细描述"></textarea>
+</view>
+
+<view class="error-report__ques mg-t20 pd-20 bg-fff">
+  <text class="fz-28 cr-333 fw-bold dis-block">提交相关图片</text>
+  <view bindtap="chooseImg" hover-class="hover-class" class="error-report__ques-pic mg-t20">
+    <c-imager wx:if="{{tempFilePath}}" src="{{tempFilePath}}" mode="widthFix" class="full-container" />
+    <c-imager wx:else src="/images/mine/pic-add.png" class="full-container" />
+  </view>
+</view>
+
+<view class="pd-h20 mg-t20">
+  <button bindtap="handleSubmit" hover-class="hover-class" class="btn-primary__block">
+    <text class="btn-primary__block-font">提交</text>
+  </button>
+</view>

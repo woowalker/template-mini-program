@@ -1,0 +1,21 @@
+.c-payment {
+  width: 100%;
+  height: 100%;
+  padding: 40rpx;
+  text-align: center;
+}
+
+.c-payment__zone {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.c-payment__pay {
+  width: 290rpx !important;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+}

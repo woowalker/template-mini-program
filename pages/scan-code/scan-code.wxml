@@ -1,0 +1,59 @@
+<c-nav-header theme='dark' title="扫码充电">
+  <view slot="backZone" bindtap="navBack" hover-class="hover-class" class="scan-code__back">
+    <c-imager src="/images/common/close.png" class="scan-code__back-icon" />
+  </view>
+</c-nav-header>
+<c-tabbar-container style="padding-bottom: 0;">
+  <view wx:if="{{ready}}" class="full-container">
+    <view wx:if="{{permissionCamera === true}}" class="scan-code">
+      <view class="scan-code__header"></view>
+      <view class="scan-code__body-left"></view>
+      <view class="scan-code__body-right"></view>
+      <view class="scan-code__footer">
+        <text class="fz-28 cr-fff fw-bold">请对准设备上的二维码</text>
+        <view class="scan-code__tool">
+          <view bindtap="setCustomInput" class="scan-code__tool-zone">
+            <c-imager src="/images/scan-code/device-num.png" class="scan-code__tool-img" />
+            <text class="fz-24 fw-bold cr-fff">输入充电桩号</text>
+          </view>
+          <view bindtap="toggleFlash" class="scan-code__tool-zone">
+            <c-imager wx:if="{{flash === 'on'}}" src="/images/scan-code/lighter.png" class="scan-code__tool-img" />
+            <c-imager wx:else src="/images/scan-code/lighter-off.png" class="scan-code__tool-img" />
+            <text class="fz-24 fw-bold cr-fff">手电筒</text>
+          </view>
+        </view>
+      </view>
+      <camera
+        mode="scanCode"
+        flash="{{flash}}"
+        bindscancode="handleScanCode"
+        binderror="handleCameraError"
+        class="full-container" />
+    </view>
+    <view wx:elif="{{permissionCamera === 'canceled'}}" class="full-container pd-h20">
+      <c-permission-deny
+        custom-tap-evt
+        bind:customtap="handleCameraAuthor"
+        scope="scope.camera"
+        scope-desc="用户取消摄像头权限授权"
+        scope-font="重新授权" />
+    </view>
+    <view wx:else class="full-container pd-h20">
+      <c-permission-deny scope="scope.camera" />
+    </view>
+  </view>
+</c-tabbar-container>
+
+<mp-dialog
+  show="{{customInput}}"
+  bindbuttontap="tapDialogButton"
+  buttons="{{buttons}}">
+  <c-cell-input
+    wx:if="{{customInput}}"
+    focus
+    type="number"
+    title="充电桩号"
+    value="{{customDeviceNum}}"
+    bindinput="handleCustomInput"
+    placeholder="请输入充电桩号" />
+</mp-dialog>

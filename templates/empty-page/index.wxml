@@ -1,0 +1,10 @@
+<template name="empty-page">
+  <view class="empty-page" style="{{style}}">
+    <c-imager wx:if="{{loading}}" src="/images/common/loading.png" class="empty-page__img" />
+    <c-imager wx:else src="/images/common/empty.png" class="empty-page__img" />
+    <view wx:if="{{loading}}" class="full-width mg-t20">
+      <c-spin-indicator tips="{{font || '加载中...'}}" />
+    </view>
+    <text wx:else class="fz-28 cr-999 mg-t20">{{font || '暂无数据'}}</text>
+  </view>
+</template>

@@ -1,0 +1,3 @@
+<view class="full-container">
+  <c-nearby-park favorite />
+</view>

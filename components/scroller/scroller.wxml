@@ -1,0 +1,27 @@
+<!-- 导入无数据模板 -->
+<import src="/templates/empty-page/index.wxml" />
+
+<scroll-view
+  enhanced="{{enhanced}}"
+  show-scrollbar="{{false}}"
+  scroll-x="{{scrollX}}"
+  scroll-y="{{scrollY}}"
+  scroll-top="{{scrollTop}}"
+  refresher-enabled="{{refresherEnabled}}"
+  refresher-triggered="{{refresh}}"
+  bindrefresherrefresh="onRefresh"
+  bindscrolltolower="onLoadMore"
+  class="c-scroller">
+  <!-- 需要再包一个 c-scroller__container 类，主要是 overflow: hidden，以防 slot 里面有 margin-top 样式，导致不足一屏也能上拉 -->
+  <view class="c-scroller__container"><slot></slot></view>
+  <!-- 无数据，空页面 -->
+  <template wx:if="{{emptyData}}" is="empty-page"></template>
+  <!-- 加载更多，加载完成 -->
+  <view wx:if="{{fullData}}" class="text-center pd-v20">
+    <text class="fz-24 cr-999">没有更多数据了</text>
+  </view>
+  <!-- 上拉加载更多，加载指示器 -->
+  <view wx:if="{{loadMore}}" class="c-scroller__loadMore">
+    <c-spin-indicator />
+  </view>
+</scroll-view>

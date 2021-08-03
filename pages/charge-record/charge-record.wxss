@@ -1,0 +1,41 @@
+.record {
+  position: relative;
+  width: calc(100% - 40rpx);
+  height: 240rpx;
+  margin: 20rpx auto 0 auto;
+  padding: 40rpx 120rpx 40rpx 40rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.record__title {
+  width: 120rpx;
+}
+
+.record__detail {
+  width: calc(100% - 120rpx);
+}
+
+.record__status {
+  position: absolute;
+  top: 40rpx;
+  right: 40rpx;
+}
+
+.record__btn {
+  position: absolute;
+  bottom: 40rpx;
+  right: 20rpx;
+  width: 140rpx !important;
+  height: 40rpx;
+  line-height: 38rpx;
+  text-align: center;
+  border-radius: 20rpx;
+  border: 1rpx solid #333333;
+}
+
+.record__btn.unpay {
+  border: 1rpx solid #FF3F3F;
+}

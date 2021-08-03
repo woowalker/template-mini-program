@@ -1,0 +1,58 @@
+.header {
+  width: 100%;
+  height: 100rpx;
+  line-height: 100rpx;
+  padding: 0 20rpx;
+}
+
+.charge-mode {
+  width: 100%;
+  padding: 40rpx 20rpx;
+}
+
+.charge-mode__zone {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.charge-mode__zone-btn {
+  width: 220rpx;
+  height: 80rpx;
+  line-height: 78rpx;
+  text-align: center;
+  border: 1px solid #4B8AEB;
+}
+
+.charge-mode__zone-btn.active {
+  background-color: #4B8AEB;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.charge-mode__zone-font {
+  line-height: unset;
+}
+
+.charge-mode__money {
+  width: 100%;
+  height: 80rpx;
+  padding: 10rpx 20rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.charge-mode__money-input {
+  display: flex;
+  flex: 1;
+  height: 100%;
+  font-size: 24rpx;
+}
+
+.charge-now__flash {
+  width: 28rpx;
+  height: 40rpx;
+}

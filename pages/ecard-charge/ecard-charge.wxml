@@ -1,0 +1,23 @@
+<view class="pd-h20 mg-t40">
+  <view class="header">
+    <text class="fz-28 cr-333 fw-bold">充值金额</text>
+    <text bindtap="navToChargeRecord" class="fz-24 cr-333">充值记录</text>
+  </view>
+  <view class="charge mg-t40">
+    <view
+      wx:for="{{chargeAmounts}}"
+      wx:key="name"
+      data-value="{{index}}"
+      bindtap="handleSetChargeAmount"
+      class="charge__amount {{item.disabled ? 'disabled' : ''}} br-primary {{index === chargeIndex ? 'bg-primary' : ''}} bra-4px mg-b20">
+      <text class="fz-32 {{index === chargeIndex ? 'cr-fff' : 'cr-333'}} fw-bold line-height-unset">{{item.text}}</text>
+      <text wx:if="{{item.reduce}}" class="charge__amount-reduce fz-24 {{index === chargeIndex ? 'cr-fff' : 'cr-error'}}">立减{{item.reduce}}元</text>
+    </view>
+  </view>
+  <view class="mg-t20">
+    <button bindtap="handleChargeECard" hover-class="hover-class" class="btn-primary__block">
+      <c-imager src="/images/mine/dollar.png" class="charge__dollar" />
+      <text class="btn-primary__block-font pd-l20">立即充值</text>
+    </button>
+  </view>
+</view>

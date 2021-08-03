@@ -1,0 +1,35 @@
+<view class="header">
+  <text class="fz-24 cr-333 line-height-unset">
+    <text>充电桩号</text>
+    <text class="pd-l10">{{detail.stake.stakeCode}}</text>
+    <text class="pd-l10">充电模式</text>
+    <text class="pd-l10">{{chargeModeFont}}</text>
+  </text>
+</view>
+
+<view class="charging">
+  <c-imager src="/images/charging/charging-car.png" class="charging-car" />
+  <view class="charging-detail">
+    <text class="charging-detail__font fz-36 cr-333 mg-b60">已充时长</text>
+    <text class="charging-detail__font fz-40 cr-333 fw-bold mg-b100">{{detail.time}}</text>
+    <text class="charging-detail__font fz-36 cr-333 mg-b60">预估电量</text>
+    <text class="charging-detail__font fz-40 cr-333 fw-bold text-ellipsis mg-b100">{{detail.used}}Kwh</text>
+    <text class="charging-detail__font fz-36 cr-333 mg-b60">预估费用</text>
+    <text class="charging-detail__font fz-40 cr-333 fw-bold text-ellipsis">{{detail.amount}}元</text>
+  </view>
+</view>
+
+<view class="charging-stop">
+  <button bindtap="handleChargingStop" hover-class="hover-class" class="btn-error__block">
+    <text class="btn-error__block-font">结束充电</text>
+  </button>
+</view>
+
+<c-payment
+  visible="{{visible}}"
+  code="{{detail.code}}"
+  tenantCode="{{detail.tenantCode}}"
+  amount="{{detail.amount}}"
+  bind:payed="payed" />
+
+<c-frame-animation show="{{show}}" text="{{loadingText}}" />

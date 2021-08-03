@@ -1,0 +1,33 @@
+<c-search
+  bind:search="handleSearch"
+  placeholder="请输入要查找的站点"
+  style="margin-top: 20rpx;" />
+<view class="c-nearby-park__scroller">
+  <c-scroller
+    wx:if="{{permissionLocaiton}}"
+    bind:refresh="onRefresh"
+    bind:loadmore="onLoadMore"
+    class="refOfScroller">
+    <view
+      wx:for="{{chargePoses}}"
+      wx:key="stationId"
+      data-value="{{item.stationId}}"
+      bindtap="navToDetail"
+      hover-class="hover-class"
+      class="c-nearby-park__station bg-fff box-shadow bra-4px mg-t20">
+      <text class="fz-28 cr-333 fw-bold">{{item.stationName}}</text>
+      <text class="c-nearby-park__station-local fz-24 cr-333">{{item.address}}</text>
+      <text class="fz-24">
+        <text class="cr-primary">可用桩点{{item.availableStakes}}个</text>
+        <text class="fz-20 cr-999 pd-l10">共有桩点{{item.totalStakes}}个</text>
+      </text>
+      <view data-value="{{item.stationId}}" catchtap="navToMap" hover-class="hover-class" class="c-nearby-park__station-nav">
+        <c-imager src="/images/nearby/nav-arrow.png" class="c-nearby-park__station-nav--icon" />
+        <text class="mg-t10 cr-999 fz-20">距离{{item.distance}}千米</text>
+      </view>
+    </view>
+  </c-scroller>
+  <view wx:else class="full-container pd-h20">
+    <c-permission-deny scope="{{permissionScope}}" bind:change="handlePermissonChange" />
+  </view>
+</view>

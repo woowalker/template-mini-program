@@ -1,0 +1,46 @@
+.login {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.login__logo {
+  width: 210rpx;
+  height: 210rpx;
+  margin-top: 116rpx;
+}
+
+.btn-primary__block {
+  margin-top: 200rpx;
+}
+
+.login-dialog {
+  text-align: left;
+}
+
+.login-dialog__zone,
+.login-dialog__verify {
+  width: 100% !important;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: transparent;
+}
+
+.login-dialog__zone-input {
+  display: flex;
+  flex: 1;
+  height: 80rpx;
+  text-align: left;
+}
+
+.login-dialog__verify-btn {
+  width: 160rpx !important;
+  height: 60rpx;
+  line-height: 60rpx;
+}
+
+.login-dialog__btn {
+  font-size: 28rpx;
+}

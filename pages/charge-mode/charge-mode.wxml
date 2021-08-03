@@ -1,0 +1,56 @@
+<view class="header bg-fff">
+  <text class="fz-24 cr-333 line-height-unset">充电桩号<text class="pd-l10">{{stake.stakeCode}}</text></text>
+</view>
+
+<view class="charge-mode bg-fff mg-t20">
+  <view class="mg-b40"><text class="fz-24 cr-333 fw-bold">充电模式</text></view>
+  <view class="charge-mode__zone">
+    <view
+      data-value="{{CHARGE_MODE_FULL}}"
+      bindtap="checkChargeType"
+      class="charge-mode__zone-btn bra-4px {{chargeMode === CHARGE_MODE_FULL ? 'active' : ''}}">
+      <text class="fz-24 charge-mode__zone-font">充满</text>
+    </view>
+    <view
+      data-value="{{CHARGE_MODE_MONEY}}"
+      bindtap="checkChargeType"
+      class="charge-mode__zone-btn bra-4px {{chargeMode === CHARGE_MODE_MONEY ? 'active' : ''}}">
+      <text class="fz-24 charge-mode__zone-font">{{chargeMoney ? chargeMoney + '元' : '固定金额'}}</text>
+    </view>
+    <picker
+      bindchange="checkChargeTime"
+      value="{{chargeTime}}"
+      range="{{presetChargeTimes}}"
+      range-key="text">
+      <view
+        data-value="{{CHARGE_MODE_TIME}}"
+        bindtap="checkChargeType"
+        class="charge-mode__zone-btn bra-4px {{chargeMode === CHARGE_MODE_TIME ? 'active' : ''}}">
+        <text class="fz-24 charge-mode__zone-font">{{chargeTime !== undefined ? presetChargeTimes[chargeTime].text : '固定时长'}}</text>
+      </view>
+    </picker>
+  </view>
+</view>
+
+<c-cell-input
+  wx:if="{{chargeMode === CHARGE_MODE_MONEY}}"
+  focus
+  type="number"
+  title="充电金额"
+  value="{{chargeMoney}}"
+  bindfocus="handleChargeMoneyFocus"
+  bindinput="checkChargeMoney"
+  placeholder="请输入充电金额">
+  <text slot="suffix" class="fz-24 cr-333 pd-l10">元</text>
+</c-cell-input>
+
+<view class="pd-h20 mg-t20">
+  <button bindtap="navToCharging" hover-class="hover-class" class="btn-primary__block">
+    <c-imager src="/images/charge-mode/flash-light.png" class="charge-now__flash" />
+    <text class="btn-primary__block-font pd-l20">立即充电</text>
+  </button>
+</view>
+
+<view bindtap="navToErrorReport" hover-class="hover-class" class="text-center mg-t20">
+  <text class="fz-28 cr-999">故障报修</text>
+</view>

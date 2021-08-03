@@ -1,0 +1,24 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages/stake/stake",
+          "pathName": "pages/stake/stake",
+          "query": "code=6035",
+          "scene": 1011
+        }
+      ]
+    }
+  }
+}

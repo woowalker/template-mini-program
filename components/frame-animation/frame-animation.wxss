@@ -1,0 +1,38 @@
+.c-frame-animation {
+  width: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  z-index: 10000;
+  transition: opacity 0.2s ease;
+  overflow: hidden;
+}
+
+.c-frame-animation.show {
+  width: 100vw;
+  opacity: 1;
+}
+
+.c-frame-animation__container {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px 2px rgba(0,0,0,0.3);
+}
+
+.c-frame-animation__img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.c-frame-animation__img.active {
+  opacity: 1;
+}

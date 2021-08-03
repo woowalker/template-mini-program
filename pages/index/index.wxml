@@ -1,0 +1,50 @@
+<c-nav-header title="充电桩" />
+
+<c-tabbar-container>
+  <view class="pd-20">
+    <view class="swiper-header">
+      <c-swiper list="{{swiperHeader}}" />
+    </view>
+    <view class="nav-order bg-fff box-shadow bra-4px mg-t20">
+      <view
+        wx:for="{{navOrders}}"
+        wx:key="text"
+        data-value="{{item.value}}"
+        bindtap="navToPage"
+        hover-class="hover-class"
+        class="nav-order__zone">
+        <c-imager src="{{item.icon}}" class="nav-order__zone-img" />
+        <text class="fz-24 cr-333">{{item.text}}</text>
+      </view>
+    </view>
+    <view class="msg-notice bg-fff box-shadow bra-4px mg-t20">
+      <c-imager src="/images/home/notice.png" class="msg-notice__img" />
+      <view class="msg-notice__zone">
+        <c-swiper vertical indicatorDots="{{false}}" list="{{msgNotices}}" />
+      </view>
+    </view>
+    <view class="swiper-attach mg-t20">
+      <c-swiper list="{{swiperAttach}}" />
+    </view>
+    <button bindtap="charging" hover-class="hover-class" class="charge-btn mg-t20">
+      <c-imager src="/images/home/saoyisao.png" class="charge-btn__img" />
+      <text class="fz-36 fw-bold cr-fff">扫码充电</text>
+    </button>
+    <view bindtap="showCustomDialog" hover-class="hover-class" class="text-center mg-t20">
+      <text class="fz-24 cr-666">输入桩号充电</text>
+    </view>
+  </view>
+</c-tabbar-container>
+
+<mp-dialog
+  show="{{visible}}"
+  bindbuttontap="customCharing"
+  buttons="{{buttons}}">
+  <c-cell-input
+    focus
+    type="number"
+    title="充电桩号"
+    value="{{stakeCode}}"
+    bindinput="handleCustomInput"
+    placeholder="请输入充电桩号" />
+</mp-dialog>

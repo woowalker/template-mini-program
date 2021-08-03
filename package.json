@@ -1,0 +1,19 @@
+{
+  "name": "charging-post",
+  "version": "1.0.0",
+  "description": "充电桩项目",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "qiangx",
+  "license": "ISC",
+  "dependencies": {
+    "@miniprogram-component-plus/tabs": "^1.0.0",
+    "dayjs": "^1.10.5",
+    "eventemitter3": "^4.0.7",
+    "gcoord": "^0.3.2",
+    "lodash": "^4.17.21",
+    "query-string": "^7.0.1"
+  }
+}

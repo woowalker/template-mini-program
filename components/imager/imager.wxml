@@ -1,0 +1,7 @@
+<image
+  src="{{autoSrc}}"
+  mode="{{mode}}"
+  bindtap="handlePreview"
+  binderror="handleLoadError"
+  class="class"
+  style="{{style}}" />

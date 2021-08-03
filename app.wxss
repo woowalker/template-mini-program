@@ -1,0 +1,372 @@
+/** 注：设计稿以 iphone6 为基准，因此 1rpx = 0.5px = 1物理像素，因此设计稿上的尺寸就是 rpx 的值 */
+/** 全局样式 */
+page {
+  width: 100%;
+  height: 100%;
+  background-color: #fafafa;
+  color: #333333;
+}
+
+page,
+view,
+text,
+input[type="text"],
+input[type="number"],
+input[type="idcard"],
+input[type="digit"],
+textarea {
+  box-sizing: border-box;
+}
+
+view {
+  font-size: 0;
+}
+
+text {
+  display: inline-block;
+  line-height: 1;
+}
+
+page button {
+  font-size: 0;
+  padding: 0;
+}
+
+/** 布局 */
+.pos-relative {
+  position: relative;
+}
+
+.pos-absolute {
+  position: absolute;
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.full-container {
+  width: 100%;
+  height: 100%;
+}
+
+.dis-none {
+  display: none;
+}
+
+.dis-block {
+  display: block;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.visible-hidden {
+  visibility: hidden;
+}
+
+.bg-primary {
+  background-color: #4B8AEB;
+}
+
+.bg-fff {
+  background-color: #ffffff;
+}
+
+/** 文字 */
+.line-height-unset {
+  line-height: unset;
+}
+
+.line-height-0 {
+  line-height: 0;
+}
+
+.line-height-1 {
+  line-height: 1;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-linethrough {
+  text-decoration: line-through;
+}
+
+.fz-0 {
+  font-size: 0;
+}
+
+.fz-20 {
+  font-size: 20rpx;
+}
+
+.fz-24 {
+  font-size: 24rpx;
+}
+
+.fz-28 {
+  font-size: 28rpx;
+}
+
+.fz-32 {
+  font-size: 32rpx;
+}
+
+.fz-34 {
+  font-size: 34rpx;
+}
+
+.fz-36 {
+  font-size: 36rpx;
+}
+
+.fz-40 {
+  font-size: 40rpx;
+}
+
+.fw-bold {
+  font-weight: bold;
+}
+
+.cr-333 {
+  color: #333333;
+}
+
+.cr-666 {
+  color: #666666;
+}
+
+.cr-999 {
+  color: #999999;
+}
+
+.cr-fff {
+  color: #fff;
+}
+
+.cr-primary {
+  color: #4B8AEB;
+}
+
+.cr-error {
+  color: #FF3F3F;
+}
+
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/** 间距分割 */
+.pd-20 {
+  padding: 20rpx;
+}
+
+.pd-40 {
+  padding: 40rpx;
+}
+
+.pd-h20 {
+  padding: 0 20rpx;
+}
+
+.pd-v20 {
+  padding: 20rpx 0;
+}
+
+.pd-t10 {
+  padding-top: 10rpx;
+}
+
+.pd-t20 {
+  padding-top: 20rpx;
+}
+
+.pd-r10 {
+  padding-right: 10rpx;
+}
+
+.pd-r20 {
+  padding-right: 20rpx;
+}
+
+.pd-b20 {
+  padding-bottom: 20rpx;
+}
+
+.pd-b40 {
+  padding-bottom: 40rpx;
+}
+
+.pd-l10 {
+  padding-left: 10rpx;
+}
+
+.pd-l20 {
+  padding-left: 20rpx;
+}
+
+.mg-20 {
+  margin: 20rpx;
+}
+
+.mg-40 {
+  margin: 40rpx;
+}
+
+.mg-h20 {
+  margin: 0 20rpx;
+}
+
+.mg-v40 {
+  margin: 40rpx 0;
+}
+
+.mg-t10 {
+  margin-top: 10rpx;
+}
+
+.mg-t20 {
+  margin-top: 20rpx;
+}
+
+.mg-t40 {
+  margin-top: 40rpx;
+}
+
+.mg-r20 {
+  margin-right: 20rpx;
+}
+
+.mg-b10 {
+  margin-bottom: 10rpx;
+}
+
+.mg-b20 {
+  margin-bottom: 20rpx;
+}
+
+.mg-b40 {
+  margin-bottom: 40rpx;
+}
+
+.mg-b60 {
+  margin-bottom: 60rpx;
+}
+
+.mg-b100 {
+  margin-bottom: 100rpx;
+}
+
+.mg-l20 {
+  margin-left: 20rpx;
+}
+
+/** 边框 */
+.br {
+  border: solid 1rpx #c9c9c9;
+}
+
+.br-tranparent {
+  border: 1rpx solid transparent;
+}
+
+.br-white {
+  border: 1rpx solid #ffffff;
+}
+
+.br-primary {
+  border: 1rpx solid #4B8AEB;
+}
+
+.br-error {
+  border: 1rpx solid #FF3F3F;
+}
+
+.br-b {
+  border-bottom: solid 1rpx #c9c9c9;
+}
+
+.br-t {
+  border-top: solid 1rpx #c9c9c9;
+}
+
+.br-l {
+  border-left: solid 1rpx #c9c9c9;
+}
+
+.br-r {
+  border-right: solid 1rpx #c9c9c9;
+}
+
+.bra-4px {
+  border-radius: 4px;
+}
+
+.box-shadow {
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.06);
+}
+
+/** 按钮 */
+.btn-primary__block,
+.btn-error__block {
+  width: 100% !important;
+  height: 120rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-primary__block-font,
+.btn-error__block-font {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.btn-primary__block {
+  background-color: #4B8AEB;
+}
+
+.btn-error__block {
+  background-color: #FF3F3F;
+}
+
+/** 业务逻辑 */
+.hover-class {
+  opacity: 0.7;
+}
+
+/** 自定义 tabbar 全局样式 */
+@import "/custom-tab-bar/index.wxss";
+
+/** 组件全局样式 */
+@import "/components/global.wxss";
+
+/** 模板样式文件 */
+@import "/templates/empty-page/index.wxss";

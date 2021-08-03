@@ -1,0 +1,42 @@
+.c-nearby-park__scroller {
+  width: 100%;
+  height: calc(100% - 100rpx);
+}
+
+.c-nearby-park__station {
+  position: relative;
+  width: calc(100% - 40rpx);
+  height: 190rpx;
+  margin: 20rpx auto 0 auto;
+  padding: 40rpx 0 40rpx 40rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.c-nearby-park__station-local {
+  display: inline-block;
+  max-width: 440rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.c-nearby-park__station-nav {
+  position: absolute;
+  top: 40rpx;
+  right: 0;
+  width: 180rpx;
+  height: 110rpx;
+  border-left: 1rpx solid #c9c9c9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.c-nearby-park__station-nav--icon {
+  width: 48rpx;
+  height: 58rpx;
+}

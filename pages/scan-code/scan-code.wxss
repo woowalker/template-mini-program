@@ -1,0 +1,155 @@
+.scan-code__back {
+  width: 104rpx;
+  height: 88rpx;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.scan-code__back-icon {
+  width: 24rpx;
+  height: 24rpx;
+}
+
+.scan-code {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.scan-code__header,
+.scan-code__body-left,
+.scan-code__body-right,
+.scan-code__footer {
+  position: absolute;
+  z-index: 10;
+  background-color: rgba(51, 51, 51, .8);
+}
+
+.scan-code__header {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 210rpx;
+}
+
+.scan-code__header::before,
+.scan-code__header::after,
+.scan-code__footer::before,
+.scan-code__footer::after {
+  content: ' ';
+  width: 100rpx;
+  height: 6rpx;
+  background-color: #ffffff;
+  position: absolute;
+}
+
+.scan-code__header::before {
+  left: 159rpx;
+  bottom: 0;
+}
+
+.scan-code__header::after {
+  right: 159rpx;
+  bottom: 0;
+}
+
+.scan-code__body-left,
+.scan-code__body-right {
+  top: 210rpx;
+  width: 165rpx;
+  height: 420rpx;
+}
+
+.scan-code__body-left::before,
+.scan-code__body-left::after,
+.scan-code__body-right::before,
+.scan-code__body-right::after {
+  content: ' ';
+  width: 6rpx;
+  height: 100rpx;
+  background-color: #ffffff;
+  position: absolute;
+}
+
+.scan-code__body-left {
+  left: 0;
+}
+
+.scan-code__body-left::before {
+  top: -6rpx;
+  right: 0;
+}
+
+.scan-code__body-left::after {
+  bottom: -6rpx;
+  right: 0;
+}
+
+.scan-code__body-right {
+  right: 0;
+}
+
+.scan-code__body-right::before {
+  top: -6rpx;
+  left: 0;
+}
+
+.scan-code__body-right::after {
+  bottom: -6rpx;
+  left: 0;
+}
+
+.scan-code__footer {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 630rpx);
+  padding-top: 20rpx;
+  text-align: center;
+}
+
+.scan-code__footer::before {
+  top: 0;
+  left: 159rpx;
+}
+
+.scan-code__footer::after {
+  top: 0;
+  right: 159rpx;
+}
+
+.scan-code__tool {
+  margin-top: 270rpx;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.scan-code__tool-zone {
+  height: 112rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.scan-code__tool-img {
+  width: 64rpx;
+  height: 64rpx;
+}
+
+.scan-code__input {
+  width: 100%;
+  height: 80rpx;
+  padding: 10rpx 20rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}

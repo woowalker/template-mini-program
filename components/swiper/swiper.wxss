@@ -1,0 +1,24 @@
+.c-swiper,
+.c-swiper__item {
+  width: 100%;
+  height: 100%;
+}
+
+.c-swiper__item {
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.c-swiper__item-img {
+  width: 100%;
+  height: 100%;
+}
+
+.c-swiper__item-font {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}

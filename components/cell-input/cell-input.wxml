@@ -1,0 +1,12 @@
+<view class="c-cell-input bg-fff mg-t20">
+  <text wx:if="{{title}}" class="fz-28 cr-333 fw-bold pd-r10">{{title}}：</text>
+  <input
+    focus="{{focus}}"
+    type="{{type}}"
+    value="{{value}}"
+    bindfocus="handleFocus"
+    bindinput="handleInput"
+    class="c-cell-input__input fz-28 br-b"
+    placeholder="{{placeholder}}" />
+  <slot name="suffix"></slot>
+</view>

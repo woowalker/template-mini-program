@@ -1,0 +1,27 @@
+<!-- 导入无数据模板 -->
+<import src="/templates/empty-page/index.wxml" />
+
+<view class="header bg-fff">
+  <text class="fz-24 cr-333 line-height-unset">充电桩号<text class="pd-l10">{{stakeCode}}</text></text>
+</view>
+
+<view wx:if="{{stake}}" class="stake pd-h20">
+  <text class="fz-36 cr-primary fw-bold stake__font {{stake.statusClass}} mg-t40">{{stake.statusFont}}</text>
+  <c-imager src="{{stake.statusImg}}" class="stake__img" />
+  <view class="stake__btn">
+    <button
+      wx:for="{{stake.statusBtns}}"
+      wx:key="text"
+      data-value="{{item}}"
+      bindtap="handleStakeAction"
+      hover-class="hover-class"
+      class="btn-primary__block">
+      <text class="btn-primary__block-font">{{item.text}}</text>
+    </button>
+  </view>
+</view>
+
+<!-- 无数据，空页面 -->
+<view wx:else class="stake-empty">
+  <template is="empty-page" data="{{...emptyOption}}"></template>
+</view>

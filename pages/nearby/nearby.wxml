@@ -1,0 +1,5 @@
+<c-nav-header title="附近" />
+
+<c-tabbar-container>
+  <c-nearby-park />
+</c-tabbar-container>

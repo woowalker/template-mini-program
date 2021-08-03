@@ -1,0 +1,14 @@
+<view class="tabbar">
+  <view
+    wx:for="{{list}}"
+    wx:key="pagePath"
+    data-value="{{index}}"
+    bindtap="onTabChange"
+    class="tabbar__item {{index === current ? 'active' : ''}}">
+    <view class="tabbar__icon">
+      <c-imager mode="aspectFill" src="{{item.selectedIconPath}}" class="tabbar__icon-active" />
+      <c-imager mode="aspectFill" src="{{item.iconPath}}" class="tabbar__icon-inactive" />
+    </view>
+    <text class="tabbar__label">{{item.text}}</text>
+  </view>
+</view>

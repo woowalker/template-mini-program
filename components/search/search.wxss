@@ -1,0 +1,21 @@
+.c-search {
+  width: calc(100% - 40rpx);
+  height: 80rpx;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.c-search__icon {
+  width: 24rpx;
+  height: 24rpx;
+  margin-right: 20rpx;
+}
+
+.c-search__input {
+  display: flex;
+  flex: 1;
+  font-size: 24rpx;
+}

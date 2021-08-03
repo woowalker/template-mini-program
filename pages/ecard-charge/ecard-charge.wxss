@@ -1,0 +1,38 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.charge {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.charge__amount {
+  width: 224rpx;
+  height: 120rpx;
+  line-height: 120rpx;
+  text-align: center;
+  position: relative;
+}
+
+.charge__amount.disabled {
+  opacity: 0;
+}
+
+.charge__amount-reduce {
+  position: absolute;
+  bottom: 8rpx;
+  right: 8rpx;
+}
+
+.charge__dollar {
+  width: 28rpx;
+  height: 36rpx;
+}

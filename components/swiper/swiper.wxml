@@ -1,0 +1,17 @@
+<swiper
+  vertical="{{vertical}}"
+  indicator-dots="{{showDots}}"
+  autoplay="{{autoplay}}"
+  circular="{{circular}}"
+  interval="{{interval}}"
+  duration="{{duration}}"
+  class="c-swiper">
+  <block wx:for="{{list}}" wx:key="key">
+    <swiper-item>
+      <view class="c-swiper__item">
+        <c-imager wx:if="{{item.src}}" src="{{item.src}}" mode="aspectFill" class="c-swiper__item-img" />
+        <view wx:if="{{item.font}}" class="c-swiper__item-font"><text class="fz-24 cr-333">{{item.font}}</text></view>
+      </view>
+    </swiper-item>
+  </block>
+</swiper>

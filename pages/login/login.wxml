@@ -1,0 +1,47 @@
+<view class="login pd-h20">
+  <c-imager src="/images/login/logo.png" class="login__logo" />
+  <button bindtap="getUserProfile" hover-class="hover-class" class="btn-primary__block">
+    <text class="btn-primary__block-font">授权登录</text>
+  </button>
+</view>
+
+<mp-dialog
+  show="{{visible}}"
+  bindbuttontap="tapDialogButton"
+  buttons="{{buttons}}">
+  <view class="login-dialog">
+    <text class="fz-28 cr-333 fw-bold">绑定手机号，以获取充电状态变更通知：</text>
+    <button wx:if="{{!customPhone}}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class="login-dialog__zone mg-t20">
+      <text class="fz-28 cr-999 pd-r20">+86</text>
+      <input
+        disabled
+        placeholder="点击获取手机号"
+        placeholder-style="color: #999999;"
+        class="login-dialog__zone-input fz-28 br-b" />
+    </button>
+    <view wx:if="{{customPhone}}" class="login-dialog__zone mg-t20">
+      <input
+        type="number"
+        bindinput="checkPhoneNumber"
+        placeholder="获取失败，请手动输入"
+        placeholder-style="color: #999999;"
+        class="login-dialog__zone-input fz-28 br-b" />
+    </view>
+    <view wx:if="{{customPhone}}" class="login-dialog__verify mg-t20">
+      <input
+        type="number"
+        bindinput="checkVerifyCode"
+        placeholder="请输入验证码"
+        placeholder-style="color: #999999;"
+        class="login-dialog__zone-input fz-28 mg-r20 br-b" />
+      <button
+        wx:if="{{customPhone}}"
+        type="primary"
+        disabled="{{countDown > 0}}"
+        bindtap="getVerifyCode"
+        class="login-dialog__verify-btn">
+        <text class="fz-28 line-height-unset">{{countDown > 0 ? countDown + 's' : '获取验证码'}}</text>
+      </button>
+    </view>
+  </view>
+</mp-dialog>

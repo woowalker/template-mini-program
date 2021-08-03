@@ -1,0 +1,41 @@
+<view class="charge-detail bg-fff box-shadow bra-4px mg-t20">
+  <view class="mg-b40"><text class="fz-28 cr-333">订单编号<text class="fw-bold pd-l20">{{recordCode}}</text></text></view>
+  <view class="mg-b40">
+    <text class="fz-28 cr-333">订单状态<text class="{{record.orderStatus === ORDER_STATUS_UNPAY ? 'cr-error' : ''}} fw-bold pd-l20">{{record.statusFont}}</text></text>
+  </view>
+  <view wx:if="{{record.orderStatus === ORDER_STATUS_PAYED}}" class="mg-b40"><text class="fz-28 cr-333">支付方式<text class="fw-bold pd-l20">{{record.payTypeFont}}</text></text></view>
+  <view class="divider mg-b40"></view>
+  <view class="mg-b40"><text class="fz-28 cr-333">开始时间<text class="fw-bold pd-l20">{{record.start}}</text></text></view>
+  <view class="mg-b40"><text class="fz-28 cr-333">结束时间<text class="fw-bold pd-l20">{{record.end}}</text></text></view>
+  <view class="mg-b40"><text class="fz-28 cr-333">充电时长<text class="fw-bold pd-l20">{{record.time}}</text></text></view>
+  <view><text class="fz-28 cr-333">充电金额<text class="cr-error pd-l20">￥{{record.amount}}</text></text></view>
+</view>
+<view class="text-right pd-h20 mg-t40">
+  <button
+    bindtap="contacts"
+    hover-class="hover-class"
+    class="charge-detail__btn">
+    <text class="record__btn-font fz-28 cr-333 line-height-unset">联系客服</text>
+  </button>
+  <button
+    wx:if="{{record.orderStatus === ORDER_STATUS_PAYED}}"
+    bindtap="delRecord"
+    hover-class="hover-class"
+    class="charge-detail__btn">
+    <text class="record__btn-font fz-28 cr-333 line-height-unset">删除订单</text>
+  </button>
+  <button
+    wx:if="{{record.orderStatus === ORDER_STATUS_UNPAY}}"
+    bindtap="pay"
+    hover-class="hover-class"
+    class="charge-detail__btn-pay">
+    <text class="record__btn-font fz-28 cr-fff fw-bold line-height-unset">去支付</text>
+  </button>
+</view>
+
+<c-payment
+  visible="{{visible}}"
+  code="{{recordCode}}"
+  tenantCode="{{record.tenantCode}}"
+  amount="{{record.amount}}"
+  bind:payed="payed" />

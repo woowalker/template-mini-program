@@ -1,0 +1,8 @@
+<view class="c-nav-header {{theme}}" style="padding-top: {{statusBarHeight}}px; {{style}}">
+  <slot name="backZone"></slot>
+  <view wx:if="{{showBack}}" bindtap="navBack" class="c-nav-header__back">
+    <c-imager src="{{backIcon}}" class="c-nav-header__back-icon" />
+  </view>
+  <text class="c-nav-header__title fz-34 fw-bold line-height-unset">{{title}}</text>
+  <slot></slot>
+</view>

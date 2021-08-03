@@ -1,0 +1,28 @@
+<page-container
+  show="{{visible}}"
+  bindenter="handlePopEnter"
+  custom-style="border-radius: 4px;">
+  <view class="c-payment">
+    <text class="fz-32 cr-333">选择支付方式</text>
+    <view class="c-payment__zone mg-t40">
+      <text class="fz-28 cr-333">电卡支付{{eCard ? '（余额：' + eCard.balance + ' 元）' : ''}}</text>
+      <radio
+        data-value="{{PAYMENT_TYPE_ECARD}}"
+        checked="{{paymentType === PAYMENT_TYPE_ECARD}}"
+        bindtap="checkPaymentType" />
+    </view>
+    <view wx:if="{{reduces}}" class="c-payment__zone mg-t10">
+      <text class="fz-24 cr-333">充值立享：<text class="cr-error">{{reduces}}</text></text>
+    </view>
+    <view class="c-payment__zone mg-t40">
+      <text class="fz-28 cr-333">微信支付</text>
+      <radio
+        data-value="{{PAYMENT_TYPE_WECHAT}}"
+        checked="{{paymentType === PAYMENT_TYPE_WECHAT}}"
+        bindtap="checkPaymentType" />
+    </view>
+    <button bindtap="pay" hover-class="hover-class" class="c-payment__pay bg-primary mg-t40">
+      <text class="fz-28 cr-fff fw-bold line-height-unset">确认支付</text>
+    </button>
+  </view>
+</page-container>

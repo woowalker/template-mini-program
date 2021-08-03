@@ -1,0 +1,16 @@
+.c-cell-input {
+  width: 100%;
+  height: 80rpx;
+  padding: 10rpx 20rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.c-cell-input__input {
+  display: flex;
+  flex: 1;
+  height: 100%;
+  text-align: left;
+}

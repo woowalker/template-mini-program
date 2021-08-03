@@ -1,0 +1,11 @@
+<view class="c-permission-deny">
+  <c-imager src="{{img}}" class="c-permission-deny__img" />
+  <text class="fz-28 cr-999 mg-t40">
+    <text wx:if="{{scope === 'scope.userLocation'}}">{{scopeDesc || '暂无地理位置信息权限'}}</text>
+    <text wx:elif="{{scope === 'scope.camera'}}">{{scopeDesc || '暂无摄像头权限'}}</text>
+    <text wx:else>{{scopeDesc || '暂无相关权限'}}</text>
+  </text>
+  <button bindtap="openSetting" hover-class="hover-class" class="btn-primary__block c-permission-deny__btn">
+    <text class="btn-primary__block-font">{{scopeFont || '去授权'}}</text>
+  </button>
+</view>
