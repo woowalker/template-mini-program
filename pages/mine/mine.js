@@ -55,6 +55,19 @@ Page({
     })
   },
 
+  rechange() {
+    wx.showModal({
+      title: '温馨提示',
+      content: '是否立即切换为运维人员？'
+    }).then(res => {
+      if (res.confirm) {
+        wx.reLaunch({
+          url: '/pages/ops-center/ops-center'
+        })
+      }
+    })
+  },
+
   handleECardBuy() {
     app.getUserInfo().then(() => {
       wx.navigateTo({

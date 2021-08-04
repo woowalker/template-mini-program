@@ -8,6 +8,9 @@
         <text wx:if="{{userinfo}}" class="fz-24 cr-666">{{userinfo ? userinfo.tel : ''}}</text>
         <text wx:else class="fz-24 cr-666">点我登录</text>
       </view>
+      <view wx:if="{{userinfo}}" bindtap="rechange" hover-class="hover-class" class="nickname__rechange">
+        <c-imager src="/images/mine/rechange.png" class="nickname__rechange-pic" />
+      </view>
     </view>
     <view class="charge-card pos-relative box-shadow mg-t20">
       <c-imager src="/images/mine/ecard-bg.png" class="charge-card__bg" />

@@ -15,7 +15,8 @@
     "pages/eacrd-record/ecard-record",
     "pages/contacts/contacts",
     "pages/error-report/error-report",
-    "pages/ecard-manage/ecard-manage"
+    "pages/ecard-manage/ecard-manage",
+    "pages/ops-center/ops-center"
   ],
   "usingComponents": {
     "mp-dialog": "weui-miniprogram/dialog/dialog",

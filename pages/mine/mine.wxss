@@ -15,13 +15,28 @@
 
 .nickname__detail {
   float: left;
-  width: calc(100% - 160rpx);
   height: 100%;
   padding: 16rpx 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
+}
+
+.nickname__rechange {
+  float: right;
+  width: 50rpx;
+  height: 100%;
+  margin-right: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.nickname__rechange-pic {
+  width: 50rpx;
+  height: 50rpx;
 }
 
 .charge-card {
