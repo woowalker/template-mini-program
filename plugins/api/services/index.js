@@ -4,6 +4,7 @@ import mine from './mine'
 import station from './station'
 import stake from './stake'
 import charge from './charge'
+import ops from './ops'
 
 export default {
   common,
@@ -11,5 +12,6 @@ export default {
   mine,
   station,
   stake,
-  charge
+  charge,
+  ops
 }

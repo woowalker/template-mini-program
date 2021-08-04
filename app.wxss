@@ -151,6 +151,10 @@ page button {
   font-weight: bold;
 }
 
+.cr-000 {
+  color: #000000;
+}
+
 .cr-333 {
   color: #333333;
 }
@@ -260,6 +264,10 @@ page button {
 
 .mg-r20 {
   margin-right: 20rpx;
+}
+
+.mg-r40 {
+  margin-right: 40rpx;
 }
 
 .mg-b10 {

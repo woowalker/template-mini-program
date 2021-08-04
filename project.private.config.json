@@ -17,6 +17,12 @@
           "pathName": "pages/stake/stake",
           "query": "code=6035",
           "scene": 1011
+        },
+        {
+          "name": "pages/ops-center/ops-center",
+          "pathName": "pages/ops-center/ops-center",
+          "query": "",
+          "scene": null
         }
       ]
     }
