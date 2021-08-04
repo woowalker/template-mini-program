@@ -5,12 +5,7 @@ const app = getApp()
 
 Page({
   data: {
-    swiperHeader: [
-      {
-        key: 'swiperHeader__1',
-        src: '/images/placeholder/bgpicture.png'
-      }
-    ],
+    swiperHeader: [],
     navOrders: [
       {
         text: '进行中订单',
@@ -36,12 +31,7 @@ Page({
         font: '数据加载中...'
       }
     ],
-    swiperAttach: [
-      {
-        key: 'swiperAttach__1',
-        src: '/images/placeholder/bgpicture.png'
-      }
-    ],
+    swiperAttach: [],
     // 输入桩号充电
     visible: false,
     stakeCode: '',

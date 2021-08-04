@@ -13,7 +13,6 @@
     "pages/charge-detail/charge-detail",
     "pages/ecard-charge/ecard-charge",
     "pages/eacrd-record/ecard-record",
-    "pages/scan-code/scan-code",
     "pages/contacts/contacts",
     "pages/error-report/error-report",
     "pages/ecard-manage/ecard-manage"
