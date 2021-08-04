@@ -19,24 +19,15 @@ Page({
     })
   },
 
-  getMyTenants() {
+  getTenants(isApplyed = true, pagination = { pageIndex: 1, limit: 10 }) {
     return app.getUserInfo().then(userinfo => {
-      return app.$api['ops/getOPSInfo']({
-        openid: userinfo.openid
-      }).then(res => {
-        return {
-          Data: res.TenantInfos,
-          TotalCount: res.TenantInfos.length
-        }
-      })
+      return app.$api['ops/getTenants']({
+        isApplyed,
+        openid: userinfo.openid,
+        keyword: this.data.keyword,
+        ...pagination
+      }, { fullData: true })
     })
-  },
-
-  getApplyTenants(pagination = { pageIndex: 1, limit: 10 }) {
-    return app.$api['ops/getTenants']({
-      keyword: this.data.keyword,
-      ...pagination
-    }, { fullData: true })
   },
 
   handleApply(evt) {
@@ -53,23 +44,14 @@ Page({
    * @param {Object} evt scroller 下拉刷新的回调参数
    */
   onRefresh(evt) {
-    if (evt.detail.extraData === 'myTenants') {
-      evt.detail.promise(
-        this.getMyTenants(evt.detail.pagination)
-          .then(res => {
-            this.setData({ myTenants: res.Data })
-            return res
-          })
-      )
-    } else {
-      evt.detail.promise(
-        this.getApplyTenants(evt.detail.pagination)
-          .then(res => {
-            this.setData({ applyTenants: res.Data })
-            return res
-          })
-      )
-    }
+    const isApplyed = evt.detail.extraData === 'myTenants'
+    evt.detail.promise(
+      this.getTenants(isApplyed, evt.detail.pagination)
+        .then(res => {
+          isApplyed ? this.setData({ myTenants: res.Data }) : this.setData({ applyTenants: res.Data })
+          return res
+        })
+    )
   },
 
   /**
@@ -77,10 +59,11 @@ Page({
    * @param {Object} evt scroller 上拉加载更多的回调参数
    */
   onLoadMore(evt) {
+    const isApplyed = evt.detail.extraData === 'myTenants'
     evt.detail.promise(
-      this.getApplyTenants(evt.detail.pagination)
+      this.getTenants(isApplyed, evt.detail.pagination)
         .then(res => {
-          this.setData({ applyTenants: this.data.applyTenants.concat(res.Data) })
+          isApplyed ? this.setData({ myTenants: this.data.myTenants.concat(res.Data) }) : this.setData({ applyTenants: this.data.applyTenants.concat(res.Data) })
           return res
         })
     )

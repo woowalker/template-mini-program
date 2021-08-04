@@ -25,21 +25,10 @@ Page({
     })
   },
 
-  getMyCards(pagination = { pageIndex: 1, limit: 10 }) {
+  getCards(isbuy = true, pagination = { pageIndex: 1, limit: 10 }) {
     return app.getUserInfo().then(userinfo => {
       return app.$api['mine/eCardList']({
-        isbuy: true,
-        openid: userinfo.openid,
-        keyword: this.data.keyword,
-        ...pagination
-      }, { fullData: true })
-    })
-  },
-
-  getSalesCards(pagination = { pageIndex: 1, limit: 10 }) {
-    return app.getUserInfo().then(userinfo => {
-      return app.$api['mine/eCardList']({
-        isbuy: false,
+        isbuy,
         openid: userinfo.openid,
         keyword: this.data.keyword,
         ...pagination
@@ -108,23 +97,14 @@ Page({
    * @param {Object} evt scroller 下拉刷新的回调参数
    */
   onRefresh(evt) {
-    if (evt.detail.extraData === 'myCards') {
-      evt.detail.promise(
-        this.getMyCards(evt.detail.pagination)
-          .then(res => {
-            this.setData({ myCards: this.checkData(res.Data) })
-            return res
-          })
-      )
-    } else {
-      evt.detail.promise(
-        this.getSalesCards(evt.detail.pagination)
-          .then(res => {
-            this.setData({ salesCards: this.checkData(res.Data) })
-            return res
-          })
-      )
-    }
+    const isbuy = evt.detail.extraData === 'myCards'
+    evt.detail.promise(
+      this.getCards(isbuy, evt.detail.pagination)
+        .then(res => {
+          isbuy ? this.setData({ myCards: this.checkData(res.Data) }) : this.setData({ salesCards: this.checkData(res.Data) })
+          return res
+        })
+    )
   },
 
   /**
@@ -132,22 +112,13 @@ Page({
    * @param {Object} evt scroller 上拉加载更多的回调参数
    */
   onLoadMore(evt) {
-    if (evt.detail.extraData === 'myCards') {
-      evt.detail.promise(
-        this.getMyCards(evt.detail.pagination)
-          .then(res => {
-            this.setData({ myCards: this.data.myCards.concat(this.checkData(res.Data)) })
-            return res
-          })
-      )
-    } else {
-      evt.detail.promise(
-        this.getSalesCards(evt.detail.pagination)
-          .then(res => {
-            this.setData({ salesCards: this.data.salesCards.concat(this.checkData(res.Data)) })
-            return res
-          })
-      )
-    }
+    const isbuy = evt.detail.extraData === 'myCards'
+    evt.detail.promise(
+      this.getCards(evt.detail.pagination)
+        .then(res => {
+          isbuy ? this.setData({ myCards: this.data.myCards.concat(this.checkData(res.Data)) }) : this.setData({ salesCards: this.data.salesCards.concat(this.checkData(res.Data)) })
+          return res
+        })
+    )
   }
 })

@@ -49,5 +49,6 @@ page {
 .operator-manage__card-apply {
   width: 136rpx;
   height: 54rpx;
+  line-height: 54rpx;
   border-radius: 27rpx;
 }

@@ -1,4 +1,7 @@
 // pages/ops-center/ops-center.js
+import Socket from '../../utils/socket'
+import config from '../../plugins/api/config'
+
 const app = getApp()
 
 Page({
@@ -28,7 +31,8 @@ Page({
         icon: '/images/ops/maintain.png',
         counts: 0
       }
-    ]
+    ],
+    socketIns: null
   },
 
   onLoad() {
@@ -39,6 +43,40 @@ Page({
         this.setData({ userinfo: res })
       })
     })
+    // socket 连接
+    const socketIns = new Socket({
+      url: config.socketUrl3242,
+      onopen: (ins) => { this.handleSocketOpen(ins) },
+      onmessage: (data) => { this.handleSocketMsg(data) }
+    })
+    this.setData({ socketIns })
+  },
+
+  onUnload() {
+    const { socketIns } = this.data
+    socketIns && socketIns.close()
+  },
+
+  handleSocketOpen(ins) {
+    app.getUserInfo().then(userinfo => {
+      const openedPayload = {
+        TypeCode: 'P0001',
+        Data: JSON.stringify({
+          userid: userinfo.id,
+          openid: userinfo.openid
+        })
+      }
+      ins.send({ data: JSON.stringify(openedPayload) })
+    })
+  },
+
+  handleSocketMsg(data) {
+    if (data) {
+      const { TypeCode, Data } = JSON.parse(data)
+      if (TypeCode === 'MT001' && Data) {
+        console.log('operator Data', Data)
+      }
+    }
   },
 
   rechange() {

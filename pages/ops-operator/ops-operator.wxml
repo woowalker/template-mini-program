@@ -10,7 +10,6 @@
 <view class="operators {{activeTab ===1 ? 'tabRightShow' : ''}}">
   <view wx:for="{{tabs}}" wx:key="title" wx:for-item="tab" class="operator-manage">
     <c-scroller
-      loadmoreEnabled="{{!tab.applyed}}"
       extraData="{{tab.applyed ? 'myTenants' : 'applyTenants'}}"
       bind:refresh="onRefresh"
       bind:loadmore="onLoadMore"
@@ -25,11 +24,11 @@
         </view>
         <view
           wx:if="{{!tab.applyed}}"
-          data-value="{{item.tenantCode}}"
+          data-value="{{item.orgId}}"
           bindtap="handleApply"
           hover-class="hover-class"
-          class="operator-manage__card-apply bg-primary">
-          <text class="fz-28 cr-fff">申请</text>
+          class="operator-manage__card-apply text-center bg-primary">
+          <text class="fz-28 cr-fff line-height-unset">申请</text>
         </view>
       </view>
     </c-scroller>

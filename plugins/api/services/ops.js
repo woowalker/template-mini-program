@@ -12,9 +12,11 @@ export default [
   },
   {
     name: 'getTenants',
-    method: 'GET',
+    method: 'POST',
     path: '/OP/Client/GetTenant',
     params: {
+      isApplyed: true,
+      openid: '',
       keyword: '',
       pageIndex: 1,
       limit: 10
