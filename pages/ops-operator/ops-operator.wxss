@@ -1,0 +1,53 @@
+page {
+  overflow: hidden;
+}
+
+.tab-bar {
+  padding: 0 20rpx;
+}
+
+.operators {
+  width: 200%;
+  height: calc(100% - 100rpx - 86rpx - 2px);
+  transition: all .2s ease;
+}
+
+.operators.tabRightShow {
+  transform: translateX(-50%);
+}
+
+.operator-manage {
+  width: 50%;
+  height: 100%;
+  float: left;
+}
+
+.operator-manage__card {
+  width: calc(100% - 40rpx);
+  padding: 20rpx;
+  margin: 20rpx auto 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.operator-manage__card-main {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.operator-manage__card-logo {
+  width: 80rpx;
+  height: 80rpx;
+  margin-right: 20rpx;
+}
+
+.operator-manage__card-apply {
+  width: 136rpx;
+  height: 54rpx;
+  border-radius: 27rpx;
+}

@@ -1,0 +1,37 @@
+<c-search
+  bind:search="handleSearch"
+  placeholder="请输入要查找的运营商"
+  style="margin-top: 20rpx;" />
+
+<view class="tab-bar">
+  <c-tabs tabs="{{tabs}}" bind:change="onChange" />
+</view>
+
+<view class="operators {{activeTab ===1 ? 'tabRightShow' : ''}}">
+  <view wx:for="{{tabs}}" wx:key="title" wx:for-item="tab" class="operator-manage">
+    <c-scroller
+      loadmoreEnabled="{{!tab.applyed}}"
+      extraData="{{tab.applyed ? 'myTenants' : 'applyTenants'}}"
+      bind:refresh="onRefresh"
+      bind:loadmore="onLoadMore"
+      class="{{tab.applyed ? 'scrollerMyTenants' : 'scrollerApplyTenants'}}">
+      <view
+        wx:for="{{tab.applyed ? myTenants : applyTenants}}"
+        wx:key="tenantCode"
+        class="operator-manage__card bg-fff box-shadow bra-4px">
+        <view class="operator-manage__card-main">
+          <c-imager src="/images/mine/operator-logo.png" class="operator-manage__card-logo" />
+          <text class="fz-28 cr-333">{{item.tenantName}}</text>
+        </view>
+        <view
+          wx:if="{{!tab.applyed}}"
+          data-value="{{item.tenantCode}}"
+          bindtap="handleApply"
+          hover-class="hover-class"
+          class="operator-manage__card-apply bg-primary">
+          <text class="fz-28 cr-fff">申请</text>
+        </view>
+      </view>
+    </c-scroller>
+  </view>
+</view>

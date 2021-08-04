@@ -1,0 +1,20 @@
+.c-tab-bar__tab {
+  font-size: 28rpx;
+  color: #666666;
+  padding: 40rpx 12rpx 14rpx 12rpx;
+  margin: 0 12rpx;
+  line-height: 1;
+}
+
+.c-tab-bar__tab-active {
+  font-size: 32rpx;
+  color: #4B8AEB;
+}
+
+.c-tab-bar__swiper {
+  display: none;
+}
+
+.weui-tabs-bar__wrp {
+  background-color: transparent !important;
+}

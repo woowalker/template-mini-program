@@ -3,4 +3,5 @@
  * 自定义组件中存在其他的自定义子组件时，自定义子组件的内部样式不会受父组件 wxss 定义的样式所影响
  * 所以这时，需要配置自定义组件的 options: { addGlobalClass: true }，然后将 父组件 wxss 定义的样式 引入到 app.wxss 中作为全局样式
  */
- @import '/components/spin-indicator/spin-indicator.wxss';
+@import '/components/spin-indicator/spin-indicator.wxss';
+@import '/components/tabs/tabs.wxss';

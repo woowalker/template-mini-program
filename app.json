@@ -16,7 +16,8 @@
     "pages/contacts/contacts",
     "pages/error-report/error-report",
     "pages/ecard-manage/ecard-manage",
-    "pages/ops-center/ops-center"
+    "pages/ops-center/ops-center",
+    "pages/ops-operator/ops-operator"
   ],
   "usingComponents": {
     "mp-dialog": "weui-miniprogram/dialog/dialog",
@@ -35,6 +36,7 @@
     "c-collapse": "/components/collapse/collapse",
     "c-frame-animation": "/components/frame-animation/frame-animation",
     "c-expand-text": "/components/expand-text/expand-text",
+    "c-tabs": "/components/tabs/tabs",
     "c-spin-indicator": "/components/spin-indicator/spin-indicator"
   },
   "tabBar": {

@@ -1,0 +1,10 @@
+<mp-tabs
+  tabs="{{tabs}}"
+  activeTab="{{currActive}}"
+  bindtabclick="onChange"
+  bindchange="onChange"
+  tab-underline-color="#4B8AEB"
+  tab-background-color="#fafafa"
+  tab-class="c-tab-bar__tab"
+  active-class="c-tab-bar__tab-active"
+  swiper-class="c-tab-bar__swiper" />

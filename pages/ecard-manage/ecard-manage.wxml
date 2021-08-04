@@ -4,16 +4,7 @@
   style="margin-top: 20rpx;" />
 
 <view class="tab-bar">
-  <mp-tabs
-    tabs="{{tabs}}"
-    activeTab="{{activeTab}}"
-    bindtabclick="onChange"
-    bindchange="onChange"
-    tab-underline-color="#4B8AEB"
-    tab-background-color="#fafafa"
-    tab-class="tab-bar__tab"
-    active-class="tab-bar__tab-active"
-    swiper-class="tab-bar__swiper" />
+  <c-tabs tabs="{{tabs}}" bind:change="onChange" />
 </view>
 
 <view class="ecards {{activeTab ===1 ? 'tabRightShow' : ''}}">

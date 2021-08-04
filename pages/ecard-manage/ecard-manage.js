@@ -99,8 +99,8 @@ Page({
   },
 
   onChange(e) {
-    const index = e.detail.index
-    this.setData({ activeTab: index })
+    const { value: activeTab } = e.detail
+    this.setData({ activeTab })
   },
 
   /**
@@ -110,7 +110,7 @@ Page({
   onRefresh(evt) {
     if (evt.detail.extraData === 'myCards') {
       evt.detail.promise(
-        this.getMyCards(true, evt.detail.pagination)
+        this.getMyCards(evt.detail.pagination)
           .then(res => {
             this.setData({ myCards: this.checkData(res.Data) })
             return res
@@ -134,7 +134,7 @@ Page({
   onLoadMore(evt) {
     if (evt.detail.extraData === 'myCards') {
       evt.detail.promise(
-        this.getMyCards(true, evt.detail.pagination)
+        this.getMyCards(evt.detail.pagination)
           .then(res => {
             this.setData({ myCards: this.data.myCards.concat(this.checkData(res.Data)) })
             return res

@@ -32,12 +32,8 @@ Page({
   },
 
   onLoad() {
-    this.getUserinfo()
-  },
-
-  getUserinfo() {
     app.getUserInfo().then(userinfo => {
-      app.$api['ops/getUserinfo']({
+      app.$api['ops/getOPSInfo']({
         openid: userinfo.openid
       }).then(res => {
         this.setData({ userinfo: res })
@@ -58,7 +54,11 @@ Page({
     })
   },
 
-  navToOperator() { },
+  navToOperator() {
+    wx.navigateTo({
+      url: '/pages/ops-operator/ops-operator'
+    })
+  },
 
   navToTicket(evt) {
     console.log('evt', evt.currentTarget.dataset)
