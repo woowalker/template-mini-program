@@ -63,6 +63,7 @@ class MakeApi {
           const _params = isEmpty(outerParams) ? params : assign({}, params, outerParams)
           const _data = outerOptions.noPickParams ? _params : pick(_params, Object.keys(params))
           const url = baseUrl + prefixPath + _replaceURLparams(apiUrl, _params)
+          method.toUpperCase() === 'DELETE' && (outerOptions.header = { 'content-type': 'application/x-www-form-urlencoded' })
           return new Promise((resolve, reject) => {
             wx.request({
               url,
