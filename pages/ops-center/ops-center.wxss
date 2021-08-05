@@ -75,6 +75,6 @@
 
 .ops-item__count-text {
   display: inline-block;
-  border-radius: 50%;
+  border-radius: 8rpx;
   padding: 8rpx;
 }

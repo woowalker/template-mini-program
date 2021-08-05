@@ -349,6 +349,7 @@ page button {
 
 /** 按钮 */
 .btn-primary__block,
+.btn-disabled__block,
 .btn-error__block {
   width: 100% !important;
   height: 120rpx;
@@ -359,6 +360,7 @@ page button {
 }
 
 .btn-primary__block-font,
+.btn-disabled__block,
 .btn-error__block-font {
   font-size: 36rpx;
   font-weight: bold;
@@ -367,6 +369,10 @@ page button {
 
 .btn-primary__block {
   background-color: #4B8AEB;
+}
+
+.btn-disabled__block {
+  background-color: #D1D1D1;
 }
 
 .btn-error__block {

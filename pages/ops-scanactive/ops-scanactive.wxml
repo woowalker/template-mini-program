@@ -1,0 +1,22 @@
+<view class="full-width pd-20">
+  <view><text class="fz-28 cr-333">工单编号：{{activate.code}}</text></view>
+  <view><text class="fz-28 cr-333 mg-t20">激活站点：{{activate.stationName}}</text></view>
+  <view class="text-center">
+    <c-imager src="/images/ops/unactive.png" class="unactive-img" />
+  </view>
+  <view class="text-center"><text class="fz-28 cr-999">设备未激活 请激活使用</text></view>
+  <view class="unactive-btn">
+    <button
+      bindtap="handleActiveCancel"
+      hover-class="hover-class"
+      class="btn-disabled__block">
+      <text class="btn-disabled__block-font">取消</text>
+    </button>
+    <button
+      bindtap="handleActive"
+      hover-class="hover-class"
+      class="btn-primary__block">
+      <text class="btn-primary__block-font">激活</text>
+    </button>
+  </view>
+</view>

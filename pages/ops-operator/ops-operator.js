@@ -56,7 +56,6 @@ Page({
             orgId: copyTenants[findIndex].orgId
           }).then(() => {
             wx.showModal({
-              title: '温馨提示',
               content: '申请成功，请等待审核',
               showCancel: false,
               complete: () => {

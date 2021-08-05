@@ -17,7 +17,7 @@ export default [
     params: {
       openid: ''
     },
-    desc: '运维人员信息'
+    desc: '运维中心各模块任务量'
   },
   {
     name: 'getTenants',
@@ -54,5 +54,16 @@ export default [
       limit: 10
     },
     desc: '获取激活工单列表'
+  },
+  {
+    name: 'activateStake',
+    method: 'POST',
+    path: '/SO/ChargInfo/ActivateStake',
+    params: {
+      code: '',
+      openid: '',
+      sequence: ''
+    },
+    desc: '激活充电桩'
   },
 ]

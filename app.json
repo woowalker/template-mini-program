@@ -18,7 +18,8 @@
     "pages/ecard-manage/ecard-manage",
     "pages/ops-center/ops-center",
     "pages/ops-operator/ops-operator",
-    "pages/ops-activate/ops-activate"
+    "pages/ops-activate/ops-activate",
+    "pages/ops-scanactive/ops-scanactive"
   ],
   "usingComponents": {
     "mp-dialog": "weui-miniprogram/dialog/dialog",

@@ -1,0 +1,21 @@
+.unactive-img {
+  margin: 120rpx auto 40rpx auto;
+  width: 566rpx;
+  height: 374rpx;
+}
+
+.unactive-btn {
+  width: 100%;
+  margin-top: 120rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.unactive-btn .btn-disabled__block,
+.unactive-btn .btn-primary__block {
+  display: flex;
+  flex: 1;
+  margin: 0 10rpx;
+}

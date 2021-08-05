@@ -1,4 +1,6 @@
 // pages/ops-activate/ops-activate.js
+import scanCode from '../../utils/scanCode'
+
 const app = getApp()
 
 Page({
@@ -27,8 +29,21 @@ Page({
     }
   },
 
-  scanToActivate() {
-
+  scanToActivate(evt) {
+    const { value } = evt.currentTarget.dataset
+    const activate = this.data.activates.find(item => item.code === value)
+    scanCode().then(res => {
+      if (res.path) {
+        const url = res.path.substring(0, 1) !== '/' ? `/${res.path}` : res.path
+        wx.navigateTo({ url: '/pages/ops-scanactive/ops-scanactive' }).then(event => {
+          event.eventChannel.emit(app.$consts['COMMON/EVENT_NAV_PAGE'], { activate })
+        })
+      } else {
+        app.showToast('识别失败', 'error')
+      }
+    }).catch(() => {
+      app.showToast('识别失败', 'error')
+    })
   },
 
   /**
