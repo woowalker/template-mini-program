@@ -33,6 +33,6 @@ export default [
   },
   {
     name: 'SUBSCRIBE_OPS_APPLY_RESULT',
-    value: ''
+    value: 'ct2_xdSWHoQDaCjHs1rAVVTIIeMDqTtzKOC3tGdQunY'
   }
 ]

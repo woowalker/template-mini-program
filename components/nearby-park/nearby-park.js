@@ -31,6 +31,28 @@ Component({
     location: {
       longitude: '', // 经度
       latitude: '' // 纬度
+    },
+    // 分页
+    autoLoaded: false,
+    pagination: {
+      pageIndex: 1,
+      limit: 10
+    }
+  },
+
+  pageLifetimes: {
+    show: function () {
+      if (this.data.autoLoaded) {
+        const { pageIndex, limit } = this.data.pagination
+        const pageParams = {
+          pageIndex: 1,
+          limit: pageIndex * limit
+        }
+        // show 的时候重新加载全部数据，以保证可用桩点数以及收藏状态的变更
+        this.getData(this.data.location, pageParams).then(res => {
+          this.setData({ chargePoses: res.Data })
+        })
+      }
     }
   },
 
@@ -91,11 +113,12 @@ Component({
      * @param {Object} location 用户位置信息
      * @param {Object} pagination 分页参数
      */
-    getData: function (location, pagination = { pageIndex: 1, limit: 10 }) {
+    getData: function (location, pagination) {
       return new Promise((resolve, reject) => {
         app.getOpenid()
           .then(openid => { this.setData({ openid }) })
           .finally(() => {
+            const pageParams = pagination || this.data.pagination
             app.$api['home/nearbyStations'](
               {
                 keyword: this.data.searchKey,
@@ -103,7 +126,7 @@ Component({
                 openid: this.data.openid,
                 lng: location.longitude, // 经度
                 lat: location.latitude, // 纬度
-                ...pagination
+                ...pageParams
               },
               { fullData: true }
             ).then(res => {
@@ -119,14 +142,13 @@ Component({
      * 获取用户位置附近充电桩点，
      * 刷新调用时，重新获取用户的位置信息 
      * @param {boolean} refresh 是否刷新调用
-     * @param {Object} pagination 分页参数
      */
-    getChargePoses: async function (refresh = true, pagination) {
+    getChargePoses: async function (refresh = true) {
       const { longitude, latitude } = this.data.location
       const newLocation = refresh ? await this.getUserLocation() : false
       // 实时获取用户信息位置失败时，用先前保存的位置信息
       if (newLocation || (longitude && latitude)) {
-        return this.getData(newLocation || this.data.location, pagination)
+        return this.getData(newLocation || this.data.location)
       }
 
       app.showToast('位置信息获取失败', 'none')
@@ -138,13 +160,17 @@ Component({
      * @param {Object} evt scroller 下拉刷新的回调参数
      */
     onRefresh: function (evt) {
-      evt.detail.promise(
-        this.getChargePoses(true, evt.detail.pagination)
-          .then(res => {
+      this.setData({
+        autoLoaded: true,
+        pagination: evt.detail.pagination
+      }, () => {
+        evt.detail.promise(
+          this.getChargePoses(true).then(res => {
             this.setData({ chargePoses: res.Data })
             return res
           })
-      )
+        )
+      })
     },
 
     /**
@@ -152,13 +178,16 @@ Component({
      * @param {Object} evt scroller 上拉加载更多的回调参数
      */
     onLoadMore: function (evt) {
-      evt.detail.promise(
-        this.getChargePoses(false, evt.detail.pagination)
-          .then(res => {
+      this.setData({
+        pagination: evt.detail.pagination
+      }, () => {
+        evt.detail.promise(
+          this.getChargePoses(false).then(res => {
             this.setData({ chargePoses: this.data.chargePoses.concat(res.Data) })
             return res
           })
-      )
+        )
+      })
     },
 
     /**

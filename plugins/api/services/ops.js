@@ -11,6 +11,15 @@ export default [
     desc: '运维人员信息'
   },
   {
+    name: 'getTaskNumber',
+    method: 'GET',
+    path: '/OP/Client/GetTaskNumber',
+    params: {
+      openid: ''
+    },
+    desc: '运维人员信息'
+  },
+  {
     name: 'getTenants',
     method: 'POST',
     path: '/OP/Client/GetTenant',
@@ -34,5 +43,16 @@ export default [
       remark: ''
     },
     desc: '申请成为运维人员'
+  },
+  {
+    name: 'getActivates',
+    method: 'POST',
+    path: '/SO/ChargInfo/ActivateList',
+    params: {
+      openid: '',
+      pageIndex: 1,
+      limit: 10
+    },
+    desc: '获取激活工单列表'
   },
 ]

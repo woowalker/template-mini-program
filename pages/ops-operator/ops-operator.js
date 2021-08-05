@@ -5,12 +5,12 @@ const app = getApp()
 
 Page({
   data: {
+    // AUDIT_TYPE_UNAPPLY AUDIT_TYPE_APPLYING AUDIT_TYPE_APPLYED
+    ...app.$consts['OPS/AUDIT_TYPE'],
     myTenants: [],
     applyTenants: [],
     tabs: [{ title: '我的运营商', applyed: true }, { title: '加入运营商', applyed: false }],
     activeTab: 0,
-    // AUDIT_TYPE_UNAPPLY AUDIT_TYPE_APPLYING AUDIT_TYPE_APPLYED
-    ...app.$consts['OPS/AUDIT_TYPE'],
     // 搜索
     keyword: '',
     pagination: {

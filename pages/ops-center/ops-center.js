@@ -6,68 +6,83 @@ const app = getApp()
 
 Page({
   data: {
-    userinfo: {
+    // TICKETS_TYPE_ACTIVATE TICKETS_TYPE_REPAIR TICKETS_TYPE_MAINTAIN
+    ...app.$consts['OPS/TICKETS_TYPE'],
+    operator: {
       UserInfo: {},
       isOperator: false
     },
-    // TICKETS_TYPE_ACTIVATE TICKETS_TYPE_REPAIR TICKETS_TYPE_MAINTAIN
-    ...app.$consts['OPS/TICKETS_TYPE'],
     tickets: [
       {
         text: '安装激活',
-        value: app.$consts['OPS/TICKETS_TYPE_ACTIVATE'],
+        orderType: app.$consts['OPS/TICKETS_TYPE_ACTIVATE'],
         icon: '/images/ops/activate.png',
-        counts: 0
+        count: 0
       },
       {
         text: '故障维修',
         icon: '/images/ops/repair.png',
-        value: app.$consts['OPS/TICKETS_TYPE_REPAIR'],
-        counts: 0
+        orderType: app.$consts['OPS/TICKETS_TYPE_REPAIR'],
+        count: 0
       },
       {
         text: '定时保养',
-        value: app.$consts['OPS/TICKETS_TYPE_MAINTAIN'],
+        orderType: app.$consts['OPS/TICKETS_TYPE_MAINTAIN'],
         icon: '/images/ops/maintain.png',
-        counts: 0
+        count: 0
       }
     ],
     socketIns: null
   },
 
   onLoad() {
-    app.getUserInfo().then(userinfo => {
-      app.$api['ops/getOPSInfo']({
-        openid: userinfo.openid
-      }).then(res => {
-        this.setData({ userinfo: res })
-      })
-    })
-    // socket 连接
-    const socketIns = new Socket({
-      url: config.socketUrl3242,
-      onopen: (ins) => { this.handleSocketOpen(ins) },
-      onmessage: (data) => { this.handleSocketMsg(data) }
-    })
-    this.setData({ socketIns })
+    if (!app.data.sessionCheckDone) {
+      app.$$EE.addListener(app.$consts['COMMON/EVENT_SESSION_CHECK_DONE'], this.getData)
+    } else {
+      this.getData()
+    }
   },
 
   onUnload() {
     const { socketIns } = this.data
     socketIns && socketIns.close()
+    app.$$EE.removeListener(app.$consts['COMMON/EVENT_SESSION_CHECK_DONE'], this.getData)
   },
 
-  handleSocketOpen(ins) {
+  getData() {
     app.getUserInfo().then(userinfo => {
-      const openedPayload = {
-        TypeCode: 'P0001',
-        Data: JSON.stringify({
-          userid: userinfo.id,
-          openid: userinfo.openid
+      Promise.all([
+        app.$api['ops/getOPSInfo']({ openid: userinfo.openid }),
+        app.$api['ops/getTaskNumber']({ openid: userinfo.openid })
+      ]).then(datas => {
+        // socket 连接
+        const socketIns = new Socket({
+          url: config.socketUrl3242,
+          onopen: (ins) => { this.handleSocketOpen(ins, userinfo) },
+          onmessage: (data) => { this.handleSocketMsg(data) }
         })
-      }
-      ins.send({ data: JSON.stringify(openedPayload) })
+        const [operator, tasks] = datas
+        const tickets = this.data.tickets.map(item => {
+          const find = tasks.find(task => task.orderType === item.orderType)
+          return {
+            ...item,
+            count: find ? find.count : item.count
+          }
+        })
+        this.setData({ operator, tickets, socketIns })
+      })
     })
+  },
+
+  handleSocketOpen(ins, userinfo) {
+    const openedPayload = {
+      TypeCode: 'P0001',
+      Data: JSON.stringify({
+        userid: userinfo.id,
+        openid: userinfo.openid
+      })
+    }
+    ins.send({ data: JSON.stringify(openedPayload) })
   },
 
   handleSocketMsg(data) {
@@ -101,7 +116,7 @@ Page({
   },
 
   navToTicket(evt) {
-    const { isOperator } = this.data.userinfo
+    const { isOperator } = this.data.operator
     if (!isOperator) {
       wx.showModal({
         title: '温馨提示',

@@ -38,6 +38,20 @@ const auditType = [
   }
 ]
 
+// 激活状态
+const activateType = [
+  // 待完成
+  {
+    name: 'ACTIVATE_TYPE_DOING',
+    value: 0
+  },
+  // 已完成
+  {
+    name: 'ACTIVATE_TYPE_DONE',
+    value: 1
+  }
+]
+
 export default [
   {
     name: 'TICKETS_TYPE',
@@ -48,5 +62,10 @@ export default [
     name: 'AUDIT_TYPE',
     value: constMapToObj(auditType)
   },
-  ...auditType
+  ...auditType,
+  {
+    name: 'ACTIVATE_TYPE',
+    value: constMapToObj(activateType)
+  },
+  ...activateType
 ]

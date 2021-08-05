@@ -1,9 +1,9 @@
 <view class="pd-20">
   <view class="nickname pd-20 bg-fff box-shadow bra-4px">
-    <c-imager allow-preview src="{{userinfo.UserInfo.avatarUrl || '/images/mine/avatar.png'}}" class="nickname__pic" />
+    <c-imager allow-preview src="{{operator.UserInfo.avatarUrl || '/images/mine/avatar.png'}}" class="nickname__pic" />
     <view class="nickname__detail">
-      <text class="fz-28 cr-333 fw-bold">{{userinfo.UserInfo.nickName || '用户名'}}</text>
-      <text class="fz-24 cr-666">{{userinfo.UserInfo.tel || '188****8888'}}</text>
+      <text class="fz-28 cr-333 fw-bold">{{operator.UserInfo.nickName || '用户名'}}</text>
+      <text class="fz-24 cr-666">{{operator.UserInfo.tel || '188****8888'}}</text>
       <view bindtap="navToOperator" hover-class="hover-class" class="nickname__operator">
         <c-imager src="/images/ops/operator.png" class="nickname__operator-pic" />
         <text class="fz-24 cr-333 fw-bold">管理归属运营商</text>
@@ -16,14 +16,14 @@
   <view
     wx:for="{{tickets}}"
     wx:key="text"
-    data-value="{{item.value}}"
+    data-value="{{item.orderType}}"
     bindtap="navToTicket"
     hover-class="hover-class"
     class="ops-item bg-fff box-shadow bra-4px pd-40 mg-t20">
     <c-imager src="{{item.icon}}" class="ops-item__pic mg-r40" />
     <text class="fz-34 cr-000">{{item.text}}</text>
-    <view wx:if="{{item.counts}}" class="ops-item__count">
-      <text class="ops-item__count-text bg-primary fz-24 cr-fff">{{item.counts}}</text>
+    <view wx:if="{{item.count}}" class="ops-item__count">
+      <text class="ops-item__count-text bg-primary fz-24 cr-fff">{{item.count}}</text>
     </view>
   </view>
 </view>

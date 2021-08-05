@@ -1,1 +1,33 @@
-/* pages/ops-activate/ops-activate.wxss */
+.activate {
+  position: relative;
+  width: calc(100% - 40rpx);
+  height: 244rpx;
+  margin: 20rpx auto 0 auto;
+  padding: 40rpx 130rpx 40rpx 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.activate__title {
+  width: 140rpx;
+}
+
+.activate__detail {
+  width: calc(100% - 140rpx);
+}
+
+.activate__status {
+  position: absolute;
+  top: 40rpx;
+  right: 20rpx;
+}
+
+.activate__btn {
+  position: absolute;
+  bottom: 40rpx;
+  right: 20rpx;
+  width: 58rpx;
+  height: 58rpx;
+}

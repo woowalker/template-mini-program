@@ -31,7 +31,7 @@
           <text class="fz-28 cr-fff line-height-unset">申请</text>
         </view>
         <view
-          wx:else
+          wx:if="{{!tab.applyed && item.status === AUDIT_TYPE_APPLYING}}"
           class="operator-manage__card-apply text-center bg-disabled">
           <text class="fz-28 cr-fff line-height-unset">审核中</text>
         </view>

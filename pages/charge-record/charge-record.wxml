@@ -7,7 +7,7 @@
     data-value="{{item.code}}"
     bindtap="navToDetail"
     hover-class="hover-class"
-    class="record bg-fff box-shadow bra-4px mg-t20">
+    class="record bg-fff box-shadow bra-4px">
     <view class="full-width overflow-hidden">
       <text class="record__title fl fz-28 cr-333">订单编号</text>
       <text class="record__detail fl fz-28 cr-333 fw-bold text-ellipsis pd-l10">{{item.code}}</text>
@@ -20,7 +20,7 @@
       <text class="record__title fl fz-28 cr-333">订单金额</text>
       <text class="record__detail fl fz-28 cr-333 fw-bold text-ellipsis pd-l10">￥{{item.amount}}</text>
     </view>
-    <text class="record__status fz-24 cr-666 {{item.orderStatus === ORDER_STATUS_UNPAY ? 'cr-error' : ''}}">{{item.statusFont}}</text>
+    <text class="record__status fz-28 cr-666 {{item.orderStatus === ORDER_STATUS_UNPAY ? 'cr-error' : ''}}">{{item.statusFont}}</text>
     <button
       data-value="{{item.code}}"
       catchtap="pay"

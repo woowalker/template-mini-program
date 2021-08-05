@@ -222,10 +222,15 @@ Page({
               code: value.code
             }).then(() => {
               app.hideLoading()
-              app.showToast('取消预约成功').then(() => {
-                wx.switchTab({
-                  url: '/pages/index/index',
-                })
+              wx.showModal({
+                content: '取消预约成功',
+                showCancel: false,
+                confirmText: '返回首页',
+                complete: () => {
+                  wx.switchTab({
+                    url: '/pages/index/index',
+                  })
+                }
               })
             }).catch(err => {
               app.hideLoading()

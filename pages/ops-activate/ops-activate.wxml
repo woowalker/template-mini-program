@@ -1,2 +1,37 @@
-<!--pages/ops-activate/ops-activate.wxml-->
-<text>pages/ops-activate/ops-activate.wxml</text>
+<c-scroller
+  bind:refresh="onRefresh"
+  bind:loadmore="onLoadMore">
+  <view
+    wx:for="{{activates}}"
+    wx:key="code"
+    class="activate bg-fff box-shadow bra-4px">
+    <view class="full-width overflow-hidden">
+      <text class="activate__title fl fz-28 cr-333">工单编号：</text>
+      <text class="activate__detail fl fz-28 cr-333 text-ellipsis pd-l10">{{item.code}}</text>
+    </view>
+    <view class="full-width overflow-hidden">
+      <text class="activate__title fl fz-28 cr-333">分配时间：</text>
+      <text class="activate__detail fl fz-28 cr-333 text-ellipsis pd-l10">{{item.st}}</text>
+    </view>
+    <view class="full-width overflow-hidden">
+      <text class="activate__title fl fz-28 cr-333">激活站点：</text>
+      <text class="activate__detail fl fz-28 cr-333 text-ellipsis pd-l10">{{item.stationName}}</text>
+    </view>
+    <view class="full-width overflow-hidden">
+      <text class="activate__title fl fz-28 cr-333">激活数量：</text>
+      <text class="activate__detail fl fz-28 cr-333 text-ellipsis pd-l10">
+        <text style="color: #2DD32D;">{{item.activatedCount}}</text>
+        <text class="pd-h8">/</text>
+        <text>{{item.count}}</text>
+      </text>
+    </view>
+    <text class="activate__status fz-28" style="color: {{item.status !== ACTIVATE_TYPE_DONE ? '#FF3F3F' : '#2DD32D'}}">{{item.status !== ACTIVATE_TYPE_DONE ? '待完成' : '已完成'}}</text>
+    <view
+      data-value="{{item.code}}"
+      bindtap="scanToActivate"
+      hover-class="hover-class"
+      class="activate__btn">
+      <c-imager src="/images/ops/scan-code.png" class="full-container" />
+    </view>
+  </view>
+</c-scroller>

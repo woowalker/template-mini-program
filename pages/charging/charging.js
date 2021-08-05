@@ -78,7 +78,7 @@ Page({
             showCancel: false,
             confirmText: '立即支付',
             complete: () => {
-              this.setData({ visible: true })
+              this.setData({ detail, visible: true })
             }
           })
           return
@@ -150,10 +150,14 @@ Page({
 
   payed() {
     this.setData({ visible: false }, () => {
-      app.showToast('支付成功').then(() => {
-        wx.switchTab({
-          url: '/pages/index/index',
-        })
+      wx.showModal({
+        content: '支付成功',
+        showCancel: false,
+        complete: () => {
+          wx.redirectTo({
+            url: '/pages/charge-detail/charge-detail?code=' + this.data.detail.code
+          })
+        }
       })
     })
   }

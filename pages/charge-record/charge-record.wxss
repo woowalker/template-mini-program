@@ -3,7 +3,7 @@
   width: calc(100% - 40rpx);
   height: 240rpx;
   margin: 20rpx auto 0 auto;
-  padding: 40rpx 120rpx 40rpx 40rpx;
+  padding: 40rpx 130rpx 40rpx 40rpx;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

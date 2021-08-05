@@ -19,29 +19,32 @@ Page({
   },
 
   onShow() {
-    if (!this.data.autoLoaded) {
-      this.setData({ autoLoaded: true })
-      return
+    if (this.data.autoLoaded) {
+      const { pageIndex, limit } = this.data.pagination
+      const pageParams = {
+        pageIndex: 1,
+        limit: pageIndex * limit
+      }
+      // 从充电记录详情页面返回时，重新拉取所有充电记录列表，以更新支付状态
+      this.getChargeRecord(false, pageParams).then(res => {
+        this.setData({ records: res.Data })
+      })
     }
-    // 从充电中页面返回时，重新拉取充电桩的相关信息
-    this.getChargeRecord(false).then(res => {
-      this.setData({ records: res.Data })
-    })
   },
 
   /**
    * 获取充电订单记录
    * @param {boolean} silent 静默获取数据
+   * @param {Object} pagination 分页参数
    */
-  getChargeRecord(silent = true) {
+  getChargeRecord(silent = true, pagination) {
     return app.getUserInfo().then(userinfo => {
       return new Promise((resolve, reject) => {
         !silent && app.showLoading()
+
+        const pageParams = pagination || this.data.pagination
         app.$api['charge/chargeRecord'](
-          {
-            openid: userinfo.openid,
-            ...this.data.pagination
-          },
+          { openid: userinfo.openid, ...pageParams },
           { fullData: true }
         ).then(res => {
           res.Data = res.Data.map(item => {
@@ -78,6 +81,7 @@ Page({
    */
   onRefresh(evt) {
     this.setData({
+      autoLoaded: true,
       pagination: evt.detail.pagination
     }, () => {
       evt.detail.promise(
@@ -122,10 +126,14 @@ Page({
 
   payed() {
     this.setData({ visible: false }, () => {
-      app.showToast('支付成功').then(() => {
-        this.getChargeRecord(false).then(res => {
-          this.setData({ records: res.Data })
-        })
+      wx.showModal({
+        content: '支付成功',
+        showCancel: false,
+        complete: () => {
+          wx.redirectTo({
+            url: '/pages/charge-detail/charge-detail?code=' + this.data.detail.code
+          })
+        }
       })
     })
   },

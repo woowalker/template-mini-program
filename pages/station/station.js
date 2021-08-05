@@ -24,17 +24,15 @@ Page({
   },
 
   onShow() {
-    if (!this.data.autoLoaded) {
-      this.setData({ autoLoaded: true })
-      return
-    }
-    // 从充电中页面返回时，重新拉取充电桩的相关信息
-    this.getStakes(false).then(({ favorite, stakes }) => {
-      this.setData({
-        favorite,
-        stakes: stakes.sort((a, b) => a.stakeStatus - b.stakeStatus)
+    if (this.data.autoLoaded) {
+      // 从充电中页面返回时，重新拉取充电桩的相关信息
+      this.getStakes(false).then(({ favorite, stakes }) => {
+        this.setData({
+          favorite,
+          stakes: stakes.sort((a, b) => a.stakeStatus - b.stakeStatus)
+        })
       })
-    })
+    }
   },
 
   onUnload() {
@@ -101,6 +99,7 @@ Page({
   },
 
   onRefresh(evt) {
+    this.setData({ autoLoaded: true })
     this.getStakes()
       .then(({ favorite, stakes }) => {
         this.setData({

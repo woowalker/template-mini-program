@@ -198,6 +198,10 @@ page button {
   padding: 40rpx;
 }
 
+.pd-h8 {
+  padding: 0 8rpx;
+}
+
 .pd-h20 {
   padding: 0 20rpx;
 }
