@@ -50,11 +50,13 @@ Component({
     refresh: false,
     // loadMore 加载中
     loadMore: false,
-    // 搜索时，要重置滚动位置
+    // 滚动位置
     scrollTop: undefined,
     // 分页
-    pageIndex: 1,
-    limit: 10,
+    pagination: {
+      pageIndex: 1,
+      limit: 10
+    },
     // 空数据
     emptyData: false,
     // 暂无更多数据
@@ -80,12 +82,14 @@ Component({
 
       this.setData({
         refresh: true,
-        pageIndex: 1,
-        limit: 10
+        pagination: {
+          ...this.data.pagination,
+          pageIndex: 1
+        }
       }, () => {
         this.triggerEvent('refresh', {
           extraData: this.data.extraData,
-          pagination: { pageIndex: this.data.pageIndex, limit: this.data.limit },
+          pagination: this.data.pagination,
           /**
            * 直接处理接口请求函数
            * @param {Promise} promise 直接传入获取数据的 Promise 函数，网络请求需要包括整个返回体
@@ -93,9 +97,10 @@ Component({
           promise: (promise) => {
             promise
               .then((res) => {
+                const { pageIndex, limit } = this.data.pagination
                 this.setData({
                   emptyData: !res.TotalCount || res.TotalCount <= 0,
-                  fullData: res.TotalCount && res.TotalCount <= this.data.pageIndex * this.data.limit
+                  fullData: res.TotalCount && res.TotalCount <= pageIndex * limit
                 })
               })
               .catch(() => {
@@ -124,11 +129,13 @@ Component({
 
       this.setData({
         loadMore: true,
-        pageIndex: this.data.pageIndex + 1,
-        limit: 10
+        pagination: {
+          ...this.data.pagination,
+          pageIndex: this.data.pagination.pageIndex + 1
+        }
       }, () => {
         this.triggerEvent('loadmore', {
-          pagination: { pageIndex: this.data.pageIndex, limit: this.data.limit },
+          pagination: this.data.pagination,
           /**
            * 直接处理接口请求函数
            * @param {Promise} promise 直接传入获取数据的 Promise 函数，网络请求需要包括整个返回体
@@ -136,7 +143,8 @@ Component({
           promise: (promise) => {
             promise
               .then((res) => {
-                this.setData({ fullData: this.data.pageIndex * this.data.limit >= res.TotalCount })
+                const { pageIndex, limit } = this.data.pagination
+                this.setData({ fullData: pageIndex * limit >= res.TotalCount })
               })
               .catch(() => {
                 this.setData({ fullData: false })
@@ -161,7 +169,9 @@ Component({
      * ref 调用的语义化接口
      */
     refresh: function () {
-      this.onRefresh()
+      this.setData({ scrollTop: 0 }, () => {
+        this.onRefresh()
+      })
     }
   }
 })

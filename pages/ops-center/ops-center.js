@@ -93,13 +93,14 @@ Page({
   },
 
   navToOperator() {
-    wx.navigateTo({
-      url: '/pages/ops-operator/ops-operator'
+    app.getUserInfo().then(() => {
+      wx.navigateTo({
+        url: '/pages/ops-operator/ops-operator'
+      })
     })
   },
 
   navToTicket(evt) {
-    console.log('evt', evt.currentTarget.dataset)
     const { isOperator } = this.data.userinfo
     if (!isOperator) {
       wx.showModal({
@@ -107,10 +108,24 @@ Page({
         content: '您还不是运维人员，是否立即申请？'
       }).then(res => {
         if (res.confirm) {
-
+          this.navToOperator()
         }
       })
       return
     }
+    app.getUserInfo().then(() => {
+      const { value } = evt.currentTarget.dataset
+      switch (value) {
+        case this.data.TICKETS_TYPE_ACTIVATE:
+          wx.navigateTo({
+            url: '/pages/ops-activate/ops-activate'
+          })
+          break
+        case this.data.TICKETS_TYPE_REPAIR:
+          break
+        case this.data.TICKETS_TYPE_MAINTAIN:
+          break
+      }
+    })
   }
 })

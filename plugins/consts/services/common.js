@@ -26,5 +26,13 @@ export default [
   {
     name: 'SUBSCRIBE_STOP_CHARGING',
     value: 'xGW2IbP5cOa9hgkG-0hpgeGTOJ-Nn3fCaqy9Dgt4L_Q'
+  },
+  {
+    name: 'SUBSCRIBE_OPS_NEWJOB',
+    value: 'yegCBBwAOoUFfXkHD6oKvL3YH9quFP0jRv7TzUppyTs'
+  },
+  {
+    name: 'SUBSCRIBE_OPS_APPLY_RESULT',
+    value: ''
   }
 ]

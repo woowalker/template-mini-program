@@ -82,6 +82,10 @@ page button {
   background-color: #4B8AEB;
 }
 
+.bg-disabled {
+  background-color: #9a9a9a;
+}
+
 .bg-fff {
   background-color: #ffffff;
 }

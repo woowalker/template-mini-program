@@ -17,7 +17,8 @@
     "pages/error-report/error-report",
     "pages/ecard-manage/ecard-manage",
     "pages/ops-center/ops-center",
-    "pages/ops-operator/ops-operator"
+    "pages/ops-operator/ops-operator",
+    "pages/ops-activate/ops-activate"
   ],
   "usingComponents": {
     "mp-dialog": "weui-miniprogram/dialog/dialog",

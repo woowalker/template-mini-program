@@ -23,12 +23,17 @@
           <text class="fz-28 cr-333">{{item.tenantName}}</text>
         </view>
         <view
-          wx:if="{{!tab.applyed}}"
-          data-value="{{item.orgId}}"
+          wx:if="{{!tab.applyed && item.status === AUDIT_TYPE_UNAPPLY}}"
+          data-value="{{item.tenantCode}}"
           bindtap="handleApply"
           hover-class="hover-class"
           class="operator-manage__card-apply text-center bg-primary">
           <text class="fz-28 cr-fff line-height-unset">申请</text>
+        </view>
+        <view
+          wx:else
+          class="operator-manage__card-apply text-center bg-disabled">
+          <text class="fz-28 cr-fff line-height-unset">审核中</text>
         </view>
       </view>
     </c-scroller>

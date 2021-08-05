@@ -22,5 +22,17 @@ export default [
       limit: 10
     },
     desc: '获取可用运营商'
-  }
+  },
+  {
+    name: 'applyForOPS',
+    method: 'POST',
+    path: '/OP/Client/ApplyMaintain',
+    params: {
+      openid: '',
+      tenantCode: '',
+      orgId: '',
+      remark: ''
+    },
+    desc: '申请成为运维人员'
+  },
 ]
