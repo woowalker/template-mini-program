@@ -2,13 +2,13 @@
   <text class="dis-block fz-28 cr-333 mg-b20">工单编号：<text>{{repair.code}}</text></text>
   <text class="dis-block fz-28 cr-333 mg-b20">负责人员：<text>{{repair.personName}}</text></text>
   <text class="dis-block fz-28 cr-333 mg-b60">分配时间：<text>{{repair.st}}</text></text>
-  <text class="dis-block fz-28 cr-333 mg-b20">工单状态：<text style="color: {{item.status !== REPAIR_TYPE_DONE ? '#D7D113' : '#2DD32D'}}">{{item.status ? (item.status !== REPAIR_TYPE_DONE ? '待解决' : '已解决') : ''}}</text></text>
+  <text class="dis-block fz-28 cr-333 mg-b20">工单状态：<text style="color: {{repair.status !== REPAIR_TYPE_DONE ? '#D7D113' : '#2DD32D'}}">{{repair.status !== undefined ? (repair.status !== REPAIR_TYPE_DONE ? '待解决' : '已解决') : ''}}</text></text>
   <text class="dis-block fz-28 cr-333 mg-b60">设备编号：<text>{{repair.stakeCode}}</text></text>
-  <text class="dis-block fz-28 cr-333">问题描述：<text>{{repair.problemDescription}}</text></text>
+  <text class="dis-block fz-28 cr-333">问题描述：<text>{{repair.problemDescription || '暂无'}}</text></text>
   <text wx:if="{{repair.et}}" class="dis-block fz-28 cr-333 mg-t20">解决时间：<text>{{repair.et}}</text></text>
 </view>
 
-<view wx:if="{{item.status && item.status !== REPAIR_TYPE_DONE}}" class="text-center pd-h20 mg-t40">
+<view wx:if="{{repair.status !== undefined && repair.status !== REPAIR_TYPE_DONE}}" class="text-center pd-h20 mg-t40">
   <button bindtap="handleSolve" hover-class="hover-class" class="btn-primary__block">
     <text class="btn-primary__block-font">提交解决</text>
   </button>
