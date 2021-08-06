@@ -47,15 +47,16 @@ Page({
     })
   },
 
-  scanToRepair(evt) {
+  navToRepair(evt) {
     const { value } = evt.currentTarget.dataset
-    const repair = this.data.repairs.find(item => item.code === value)
+    wx.navigateTo({ url: '/pages/ops-repairdetail/ops-repairdetail?code=' + value })
+  },
+
+  scanToRepair() {
     scanCode().then(res => {
       if (res.path) {
         const url = res.path.substring(0, 1) !== '/' ? `/${res.path}` : res.path
-        wx.navigateTo({ url }).then(event => {
-          event.eventChannel.emit(app.$consts['COMMON/EVENT_NAV_PAGE'], { repair })
-        })
+        wx.navigateTo({ url })
       } else {
         app.showToast('识别失败', 'error')
       }

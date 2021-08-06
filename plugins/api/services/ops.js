@@ -76,5 +76,24 @@ export default [
       limit: 10
     },
     desc: '获取维修工单列表'
+  },
+  {
+    name: 'getRepairDetail',
+    method: 'GET',
+    path: '/SO/ChargInfo/ScanRepairDetail',
+    params: {
+      code: ''
+    },
+    desc: '获取待维修充电桩详情'
+  },
+  {
+    name: 'repairStake',
+    method: 'POST',
+    path: '/SO/ChargInfo/RepairStake',
+    params: {
+      code: '',
+      openid: ''
+    },
+    desc: '充电桩维修提交'
   }
 ]

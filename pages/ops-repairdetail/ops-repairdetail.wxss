@@ -1,0 +1,6 @@
+.repair {
+  position: relative;
+  width: calc(100% - 40rpx);
+  margin: 40rpx auto 0 auto;
+  padding: 40rpx;
+}

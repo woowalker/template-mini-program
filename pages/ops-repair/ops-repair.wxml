@@ -5,6 +5,9 @@
   <view
     wx:for="{{repairs}}"
     wx:key="code"
+    data-value="{{item.stakeCode}}"
+    bindtap="navToRepair"
+    hover-class="hover-class"
     class="repair bg-fff box-shadow bra-4px">
     <view class="full-width overflow-hidden">
       <text class="repair__title fl fz-28 cr-333">工单编号：</text>
