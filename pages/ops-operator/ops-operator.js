@@ -19,6 +19,10 @@ Page({
     }
   },
 
+  onLoad(params) {
+    params?.activeTab && this.setData({ activeTab: Number(params.activeTab) })
+  },
+
   handleSearch(evt) {
     this.setData({
       keyword: evt.detail.value

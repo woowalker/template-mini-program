@@ -35,7 +35,7 @@ Page({
     scanCode().then(res => {
       if (res.path) {
         const url = res.path.substring(0, 1) !== '/' ? `/${res.path}` : res.path
-        wx.navigateTo({ url: '/pages/ops-scanactive/ops-scanactive' }).then(event => {
+        wx.navigateTo({ url }).then(event => {
           event.eventChannel.emit(app.$consts['COMMON/EVENT_NAV_PAGE'], { activate })
         })
       } else {

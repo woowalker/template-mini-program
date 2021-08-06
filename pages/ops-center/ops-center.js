@@ -10,6 +10,7 @@ Page({
     ...app.$consts['OPS/TICKETS_TYPE'],
     operator: {
       UserInfo: {},
+      openid: '',
       isOperator: false
     },
     tickets: [
@@ -40,6 +41,23 @@ Page({
       app.$$EE.addListener(app.$consts['COMMON/EVENT_SESSION_CHECK_DONE'], this.getData)
     } else {
       this.getData()
+    }
+  },
+
+  onShow() {
+    const { openid } = this.data.operator
+    if (openid) {
+      // 更新工单数量
+      app.$api['ops/getTaskNumber']({ openid }).then(res => {
+        const tickets = this.data.tickets.map(item => {
+          const find = res.find(task => task.orderType === item.orderType)
+          return {
+            ...item,
+            count: find ? find.count : item.count
+          }
+        })
+        this.setData({ tickets })
+      })
     }
   },
 
@@ -89,7 +107,8 @@ Page({
     if (data) {
       const { TypeCode, Data } = JSON.parse(data)
       if (TypeCode === 'MT001' && Data) {
-        console.log('operator Data', Data)
+        const { Description, Updates } = Data
+
       }
     }
   },
@@ -107,10 +126,10 @@ Page({
     })
   },
 
-  navToOperator() {
+  navToOperator(activeTab = 0) {
     app.getUserInfo().then(() => {
       wx.navigateTo({
-        url: '/pages/ops-operator/ops-operator'
+        url: '/pages/ops-operator/ops-operator?activeTab=' + activeTab
       })
     })
   },
@@ -123,7 +142,7 @@ Page({
         content: '您还不是运维人员，是否立即申请？'
       }).then(res => {
         if (res.confirm) {
-          this.navToOperator()
+          this.navToOperator(1)
         }
       })
       return

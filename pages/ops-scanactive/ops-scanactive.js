@@ -13,7 +13,7 @@ Page({
     // scene 是小程序码，普通二维码进来是带 code
     const scene = params.scene ? queryString.parse(decodeURIComponent(params.scene)) : { sequence: params.sequence }
     // 兼容带进来的属性是 id 情况
-    this.setData({ stakeCode: scene.sequence || scene.id })
+    this.setData({ sequence: scene.sequence || scene.id })
 
     this.getOpenerEventChannel().on(
       app.$consts['COMMON/EVENT_NAV_PAGE'],
@@ -34,7 +34,7 @@ Page({
     app.getUserInfo().then(userinfo => {
       app.showLoading()
       app.$api['ops/activateStake']({
-        code: activate.code,
+        code: this.data.activate.code,
         openid: userinfo.openid,
         sequence: this.data.sequence
       }).then(() => {
@@ -45,6 +45,8 @@ Page({
             wx.navigateBack()
           }
         })
+      }).finally(() => {
+        app.hideLoading()
       })
     })
   }

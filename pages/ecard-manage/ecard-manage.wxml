@@ -4,7 +4,7 @@
   style="margin-top: 20rpx;" />
 
 <view class="tab-bar">
-  <c-tabs tabs="{{tabs}}" bind:change="onChange" />
+  <c-tabs tabs="{{tabs}}" activeTab="{{activeTab}}" bind:change="onChange" />
 </view>
 
 <view class="ecards {{activeTab ===1 ? 'tabRightShow' : ''}}">

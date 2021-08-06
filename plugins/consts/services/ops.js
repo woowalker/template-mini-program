@@ -16,6 +16,11 @@ const ticketsType = [
   {
     name: 'TICKETS_TYPE_MAINTAIN',
     value: 2
+  },
+  // 审核状态变更模块
+  {
+    name: 'TICKETS_TYPE_AUDIT_STATUS',
+    value: 3
   }
 ]
 

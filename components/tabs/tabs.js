@@ -27,7 +27,7 @@ Component({
 
   observers: {
     activeTab: function (activeTab) {
-      this.setData({ activeTab })
+      this.setData({ currActive: activeTab })
     }
   },
 
