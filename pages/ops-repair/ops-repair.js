@@ -1,13 +1,13 @@
-// pages/ops-activate/ops-activate.js
+// pages/ops-repair/ops-repair.js
 import scanCode from '../../utils/scanCode'
 
 const app = getApp()
 
 Page({
   data: {
-    // ACTIVATE_TYPE_DOING ACTIVATE_TYPE_DONE
-    ...app.$consts['OPS/ACTIVATE_TYPE'],
-    activates: [],
+    // REPAIR_TYPE_DOING REPAIR_TYPE_DONE
+    ...app.$consts['OPS/REPAIR_TYPE'],
+    repairs: [],
     autoLoaded: false,
     pagination: {
       pageIndex: 1,
@@ -15,7 +15,7 @@ Page({
     }
   },
   onLoad() {
-    app.$$EE.addListener(app.$consts['COMMON/EVENT_OPS_ACTIVATE_UPDATE'], this.handleSocketUpdate)
+    app.$$EE.addListener(app.$consts['COMMON/EVENT_OPS_REPAIR_UPDATE'], this.handleSocketUpdate)
   },
 
   onShow() {
@@ -26,8 +26,8 @@ Page({
         limit: pageIndex * limit
       }
       // 扫码激活返回后，更新列表数据
-      this.getActivates(false, pageParams).then(res => {
-        this.setData({ activates: res.Data })
+      this.getRepairs(false, pageParams).then(res => {
+        this.setData({ repairs: res.Data })
       })
     }
   },
@@ -47,14 +47,14 @@ Page({
     })
   },
 
-  scanToActivate(evt) {
+  scanToRepair(evt) {
     const { value } = evt.currentTarget.dataset
-    const activate = this.data.activates.find(item => item.code === value)
+    const repair = this.data.repairs.find(item => item.code === value)
     scanCode().then(res => {
       if (res.path) {
         const url = res.path.substring(0, 1) !== '/' ? `/${res.path}` : res.path
         wx.navigateTo({ url }).then(event => {
-          event.eventChannel.emit(app.$consts['COMMON/EVENT_NAV_PAGE'], { activate })
+          event.eventChannel.emit(app.$consts['COMMON/EVENT_NAV_PAGE'], { repair })
         })
       } else {
         app.showToast('识别失败', 'error')
@@ -65,17 +65,17 @@ Page({
   },
 
   /**
-   * 获取激活工单记录
+   * 获取维修工单记录
    * @param {boolean} silent 静默获取数据
    * @param {Object} pagination 分页参数
    */
-  getActivates(silent = true, pagination) {
+  getRepairs(silent = true, pagination) {
     return app.getUserInfo().then(userinfo => {
       return new Promise((resolve, reject) => {
         !silent && app.showLoading()
 
         const pageParams = pagination || this.data.pagination
-        app.$api['ops/getActivates'](
+        app.$api['ops/getRepairs'](
           { openid: userinfo.openid, ...pageParams },
           { fullData: true }
         ).then(res => {
@@ -99,9 +99,9 @@ Page({
       pagination: evt.detail.pagination
     }, () => {
       evt.detail.promise(
-        this.getActivates()
+        this.getRepairs()
           .then(res => {
-            this.setData({ activates: res.Data })
+            this.setData({ repairs: res.Data })
             return res
           })
       )
@@ -117,9 +117,9 @@ Page({
       pagination: evt.detail.pagination
     }, () => {
       evt.detail.promise(
-        this.getActivates()
+        this.getRepairs()
           .then(res => {
-            this.setData({ activates: this.data.activates.concat(res.Data) })
+            this.setData({ repairs: this.data.repairs.concat(res.Data) })
             return res
           })
       )

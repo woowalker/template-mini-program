@@ -1,0 +1,33 @@
+.repair {
+  position: relative;
+  width: calc(100% - 40rpx);
+  height: 200rpx;
+  margin: 20rpx auto 0 auto;
+  padding: 40rpx 130rpx 40rpx 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.repair__title {
+  width: 140rpx;
+}
+
+.repair__detail {
+  width: calc(100% - 140rpx);
+}
+
+.repair__status {
+  position: absolute;
+  top: 40rpx;
+  right: 20rpx;
+}
+
+.repair__btn {
+  position: fixed;
+  bottom: 160rpx;
+  right: 20rpx;
+  width: 116rpx;
+  height: 116rpx;
+}

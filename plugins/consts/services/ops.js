@@ -57,6 +57,20 @@ const activateType = [
   }
 ]
 
+// 维修状态
+const repairType = [
+  // 待完成
+  {
+    name: 'REPAIR_TYPE_DOING',
+    value: 0
+  },
+  // 已完成
+  {
+    name: 'REPAIR_TYPE_DONE',
+    value: 1
+  }
+]
+
 export default [
   {
     name: 'TICKETS_TYPE',
@@ -72,5 +86,10 @@ export default [
     name: 'ACTIVATE_TYPE',
     value: constMapToObj(activateType)
   },
-  ...activateType
+  ...activateType,
+  {
+    name: 'REPAIR_TYPE',
+    value: constMapToObj(repairType)
+  },
+  ...repairType
 ]

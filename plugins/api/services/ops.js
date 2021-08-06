@@ -66,4 +66,15 @@ export default [
     },
     desc: '激活充电桩'
   },
+  {
+    name: 'getRepairs',
+    method: 'POST',
+    path: '/SO/ChargInfo/RepairList',
+    params: {
+      openid: '',
+      pageIndex: 1,
+      limit: 10
+    },
+    desc: '获取维修工单列表'
+  }
 ]
