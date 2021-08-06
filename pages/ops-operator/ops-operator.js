@@ -21,6 +21,23 @@ Page({
 
   onLoad(params) {
     params?.activeTab && this.setData({ activeTab: Number(params.activeTab) })
+    app.$$EE.addListener(app.$consts['COMMON/EVENT_OPS_AUDITSTATUS_UPDATE'], this.handleSocketUpdate)
+  },
+
+  onUnload() {
+    app.$$EE.removeListener(app.$consts['COMMON/EVENT_OPS_AUDITSTATUS_UPDATE'], this.handleSocketUpdate)
+  },
+
+  handleSocketUpdate(msg) {
+    wx.showModal({
+      content: msg,
+      showCancel: false,
+      complete: () => {
+        this.setData({ activeTab: 0 }, () => {
+          this.selectComponent('.scrollerMyTenants').refresh()
+        })
+      }
+    })
   },
 
   handleSearch(evt) {

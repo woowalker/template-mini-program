@@ -14,6 +14,9 @@ Page({
       limit: 10
     }
   },
+  onLoad(params) {
+    app.$$EE.addListener(app.$consts['COMMON/EVENT_OPS_ACTIVATE_UPDATE'], this.handleSocketUpdate)
+  },
 
   onShow() {
     if (this.data.autoLoaded) {
@@ -27,6 +30,21 @@ Page({
         this.setData({ activates: res.Data })
       })
     }
+  },
+
+  onUnload() {
+    app.$$EE.removeListener(app.$consts['COMMON/EVENT_OPS_ACTIVATE_UPDATE'], this.handleSocketUpdate)
+  },
+
+  handleSocketUpdate(msg) {
+    wx.showModal({
+      content: msg,
+      showCancel: false,
+      confirmText: '立即刷新',
+      complete: () => {
+        this.selectComponent('.refOfScroller').refresh()
+      }
+    })
   },
 
   scanToActivate(evt) {

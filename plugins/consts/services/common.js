@@ -17,6 +17,22 @@ export default [
     name: 'EVENT_SESSION_CHECK_DONE',
     value: 'event_session_check_done'
   },
+  {
+    name: 'EVENT_OPS_ACTIVATE_UPDATE',
+    value: 'event_ops_activate_update'
+  },
+  {
+    name: 'EVENT_OPS_REPAIR_UPDATE',
+    value: 'event_ops_repair_update'
+  },
+  {
+    name: 'EVENT_OPS_MAINTAIN_UPDATE',
+    value: 'event_ops_maintain_update'
+  },
+  {
+    name: 'EVENT_OPS_AUDITSTATUS_UPDATE',
+    value: 'event_ops_auditstatus_update'
+  },
   // 正则
   {
     name: 'REG_PHONE',

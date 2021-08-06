@@ -1,6 +1,7 @@
 <c-scroller
   bind:refresh="onRefresh"
-  bind:loadmore="onLoadMore">
+  bind:loadmore="onLoadMore"
+  class="refOfScroller">
   <view
     wx:for="{{activates}}"
     wx:key="code"

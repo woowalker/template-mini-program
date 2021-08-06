@@ -6,7 +6,7 @@ const app = getApp()
 
 Page({
   data: {
-    // TICKETS_TYPE_ACTIVATE TICKETS_TYPE_REPAIR TICKETS_TYPE_MAINTAIN
+    // TICKETS_TYPE_ACTIVATE TICKETS_TYPE_REPAIR TICKETS_TYPE_MAINTAIN TICKETS_TYPE_AUDIT_STATUS
     ...app.$consts['OPS/TICKETS_TYPE'],
     operator: {
       UserInfo: {},
@@ -45,20 +45,9 @@ Page({
   },
 
   onShow() {
+    // 更新工单数量
     const { openid } = this.data.operator
-    if (openid) {
-      // 更新工单数量
-      app.$api['ops/getTaskNumber']({ openid }).then(res => {
-        const tickets = this.data.tickets.map(item => {
-          const find = res.find(task => task.orderType === item.orderType)
-          return {
-            ...item,
-            count: find ? find.count : item.count
-          }
-        })
-        this.setData({ tickets })
-      })
-    }
+    openid && this.getTaskNumber(openid)
   },
 
   onUnload() {
@@ -67,28 +56,39 @@ Page({
     app.$$EE.removeListener(app.$consts['COMMON/EVENT_SESSION_CHECK_DONE'], this.getData)
   },
 
-  getData() {
+  getData(socket = true) {
     app.getUserInfo().then(userinfo => {
-      Promise.all([
-        app.$api['ops/getOPSInfo']({ openid: userinfo.openid }),
-        app.$api['ops/getTaskNumber']({ openid: userinfo.openid })
-      ]).then(datas => {
-        // socket 连接
-        const socketIns = new Socket({
-          url: config.socketUrl3242,
-          onopen: (ins) => { this.handleSocketOpen(ins, userinfo) },
-          onmessage: (data) => { this.handleSocketMsg(data) }
-        })
-        const [operator, tasks] = datas
-        const tickets = this.data.tickets.map(item => {
-          const find = tasks.find(task => task.orderType === item.orderType)
-          return {
-            ...item,
-            count: find ? find.count : item.count
-          }
-        })
-        this.setData({ operator, tickets, socketIns })
+      this.getOPSInfo(userinfo.openid)
+      this.getTaskNumber(userinfo.openid)
+      return userinfo
+    }).then(userinfo => {
+      if (!socket) return
+      // socket 连接
+      const socketIns = new Socket({
+        url: config.socketUrl3242,
+        onopen: (ins) => { this.handleSocketOpen(ins, userinfo) },
+        onmessage: (data) => { this.handleSocketMsg(data) }
       })
+      this.setData({ socketIns })
+    })
+  },
+
+  getOPSInfo(openid) {
+    return app.$api['ops/getOPSInfo']({ openid }).then(operator => {
+      this.setData({ operator })
+    })
+  },
+
+  getTaskNumber(openid) {
+    app.$api['ops/getTaskNumber']({ openid }).then(res => {
+      const tickets = this.data.tickets.map(item => {
+        const find = res.find(resItem => resItem.orderType === item.orderType)
+        return {
+          ...item,
+          count: find ? find.count : item.count
+        }
+      })
+      this.setData({ tickets })
     })
   },
 
@@ -108,7 +108,29 @@ Page({
       const { TypeCode, Data } = JSON.parse(data)
       if (TypeCode === 'MT001' && Data) {
         const { Description, Updates } = Data
-
+        Updates.forEach(item => {
+          switch (item.orderType) {
+            case this.data.TICKETS_TYPE_ACTIVATE:
+              app.$$EE.emit(app.$consts['COMMON/EVENT_OPS_ACTIVATE_UPDATE'], Description)
+              break
+            case this.data.TICKETS_TYPE_REPAIR:
+              app.$$EE.emit(app.$consts['COMMON/EVENT_OPS_REPAIR_UPDATE'], Description)
+              break
+            case this.data.TICKETS_TYPE_MAINTAIN:
+              app.$$EE.emit(app.$consts['COMMON/EVENT_OPS_MAINTAIN_UPDATE'], Description)
+              break
+            case this.data.TICKETS_TYPE_AUDIT_STATUS:
+              app.$$EE.emit(app.$consts['COMMON/EVENT_OPS_AUDITSTATUS_UPDATE'], Description)
+              break
+          }
+        })
+        // 当前页面为运维中心首页，则 toast 提醒
+        const pages = getCurrentPages()
+        pages.length <= 1 && app.showToast(Description, 'none', false, 5000)
+        // 强震动提醒
+        wx.vibrateLong()
+        // 更新首页数据
+        this.getData(false)
       }
     }
   },
