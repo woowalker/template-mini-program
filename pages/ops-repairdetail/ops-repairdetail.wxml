@@ -12,5 +12,5 @@
   <button bindtap="handleSolve" hover-class="hover-class" class="btn-primary__block">
     <text class="btn-primary__block-font">提交解决</text>
   </button>
-  <text class="fz-28 cr-333 mg-t20">无法解决？</text>
+  <text bindtap="navToUnSolve" class="fz-28 cr-333 mg-t20">无法解决？</text>
 </view>

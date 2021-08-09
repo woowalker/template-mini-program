@@ -68,5 +68,11 @@ Page({
         app.hideLoading()
       })
     })
+  },
+
+  navToUnSolve() {
+    wx.navigateTo({
+      url: '/pages/error-report/error-report?stakeCode=' + this.data.repair.stakeCode
+    })
   }
 })
