@@ -1,0 +1,22 @@
+page {
+  overflow: hidden;
+}
+
+.maintain {
+  position: relative;
+  width: calc(100% - 40rpx);
+  margin: 40rpx auto 0 auto;
+  padding: 40rpx;
+}
+
+.maintain__scroller {
+  width: 100%;
+  max-height: 200rpx;
+}
+
+.maintain__checkbox {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}

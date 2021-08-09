@@ -120,4 +120,15 @@ export default [
     },
     desc: '获取待保养充电桩详情'
   },
+  {
+    name: 'maintainStake',
+    method: 'POST',
+    path: '/SO/ChargInfo/MaintainStake',
+    params: {
+      code: '',
+      openid: '',
+      projs: ''
+    },
+    desc: '充电桩保养提交'
+  }
 ]

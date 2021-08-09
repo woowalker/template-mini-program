@@ -1,0 +1,26 @@
+<view class="maintain bg-fff box-shadow bra-4px">
+  <text class="dis-block fz-28 cr-333 mg-b20">工单编号：<text>{{maintain.code}}</text></text>
+  <text class="dis-block fz-28 cr-333 mg-b20">负责人员：<text>{{maintain.personName}}</text></text>
+  <text class="dis-block fz-28 cr-333 mg-b60">分配时间：<text>{{maintain.st}}</text></text>
+  <text class="dis-block fz-28 cr-333 mg-b20">工单状态：<text style="color: {{maintain.status !== undefined ? (maintain.status === MAINTAIN_TYPE_WAIT ? '#4B8AEB' : maintain.status === MAINTAIN_TYPE_DOING ? '#D7D113' : '#2DD32D') : ''}}">{{maintain.status !== undefined ? (maintain.status === MAINTAIN_TYPE_WAIT ? '待保养' : maintain.status === MAINTAIN_TYPE_DOING ? '保养中' : '保养完成') : ''}}</text></text>
+  <text class="dis-block fz-28 cr-333 mg-b60">设备编号：<text>{{maintain.stakeCode}}</text></text>
+  <text class="dis-block fz-28 cr-333 mg-b20">保养项目</text>
+  <scroll-view scroll-y="{{true}}" class="maintain__scroller">
+    <checkbox-group bindchange="checkboxChange">
+      <label class="maintain__checkbox dis-block mg-b20" wx:for="{{maintain.projs}}" wx:key="projId">
+        <view><checkbox disabled="{{maintain.status !== undefined && maintain.status === MAINTAIN_TYPE_DONE}}" value="{{item.projId}}" checked="{{item.checked}}" /></view>
+        <text class="fz-28 cr-333">{{item.projName}}</text>
+      </label>
+    </checkbox-group>
+  </scroll-view>
+  <text wx:if="{{maintain.et}}" class="dis-block fz-28 cr-333 mg-t20">养护时间：<text>{{maintain.et}}</text></text>
+</view>
+
+<view wx:if="{{maintain.status !== undefined && maintain.status !== MAINTAIN_TYPE_DONE}}" class="text-center pd-h20 mg-t40">
+  <button wx:if="{{solved}}" bindtap="handleSolve" hover-class="hover-class" class="btn-primary__block">
+    <text class="btn-primary__block-font">提交保养</text>
+  </button>
+  <view wx:else class="btn-disabled__block">
+    <text class="btn-disabled__block-font">提交保养</text>
+  </view>
+</view>
