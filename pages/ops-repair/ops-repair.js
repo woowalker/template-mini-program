@@ -49,7 +49,8 @@ Page({
 
   navToRepair(evt) {
     const { value } = evt.currentTarget.dataset
-    wx.navigateTo({ url: '/pages/ops-repairdetail/ops-repairdetail?code=' + value })
+    const repair = this.data.repairs.find(item => item.code === value)
+    wx.navigateTo({ url: `/pages/ops-repairdetail/ops-repairdetail?code=${repair.code}&stakeCode=${repair.stakeCode}` })
   },
 
   scanToRepair() {

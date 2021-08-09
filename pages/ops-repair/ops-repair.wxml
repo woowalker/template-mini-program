@@ -5,7 +5,7 @@
   <view
     wx:for="{{repairs}}"
     wx:key="code"
-    data-value="{{item.stakeCode}}"
+    data-value="{{item.code}}"
     bindtap="navToRepair"
     hover-class="hover-class"
     class="repair bg-fff box-shadow bra-4px">

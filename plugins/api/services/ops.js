@@ -79,10 +79,12 @@ export default [
   },
   {
     name: 'getRepairDetail',
-    method: 'GET',
+    method: 'POST',
     path: '/SO/ChargInfo/ScanRepairDetail',
     params: {
-      code: ''
+      code: '', // 订单编号
+      openid: '',
+      stakeCode: ''
     },
     desc: '获取待维修充电桩详情'
   },

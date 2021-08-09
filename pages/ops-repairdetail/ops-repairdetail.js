@@ -8,14 +8,17 @@ Page({
     // REPAIR_TYPE_DOING REPAIR_TYPE_DONE
     ...app.$consts['OPS/REPAIR_TYPE'],
     repair: {},
-    stakeCode: ''
+    code: '', // 工单号
+    stakeCode: '' // 充电桩编码
   },
 
   onLoad(params) {
-    // scene 是小程序码，普通二维码进来是带 code
-    const scene = params.scene ? queryString.parse(decodeURIComponent(params.scene)) : { code: params.code }
-    // 兼容带进来的属性是 id 情况
-    this.setData({ stakeCode: scene.code || scene.id })
+    if (params.scene) {
+      const scene = queryString.parse(decodeURIComponent(params.scene))
+      this.setData({ stakeCode: scene.code })
+    } else {
+      this.setData({ code: params.code, stakeCode: params.stakeCode })
+    }
   },
 
   onShow() {
@@ -23,23 +26,27 @@ Page({
   },
 
   getRepairDetail() {
-    app.showLoading()
-    app.$api['ops/getRepairDetail']({
-      code: this.data.stakeCode
-    }).then(res => {
-      if (res) {
-        this.setData({ repair: res })
-      } else {
-        wx.showModal({
-          content: '暂无可维修信息',
-          showCancel: false,
-          complete: () => {
-            wx.navigateBack()
-          }
-        })
-      }
-    }).finally(() => {
-      app.hideLoading()
+    app.getUserInfo().then(userinfo => {
+      app.showLoading()
+      app.$api['ops/getRepairDetail']({
+        code: this.data.code,
+        stakeCode: this.data.stakeCode,
+        openid: userinfo.openid
+      }).then(res => {
+        if (res) {
+          this.setData({ repair: res })
+        } else {
+          wx.showModal({
+            content: '暂无可维修信息',
+            showCancel: false,
+            complete: () => {
+              wx.navigateBack()
+            }
+          })
+        }
+      }).finally(() => {
+        app.hideLoading()
+      })
     })
   },
 
