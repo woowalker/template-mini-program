@@ -97,5 +97,27 @@ export default [
       openid: ''
     },
     desc: '充电桩维修提交'
-  }
+  },
+  {
+    name: 'getMaintains',
+    method: 'POST',
+    path: '/SO/ChargInfo/MaintainList',
+    params: {
+      openid: '',
+      pageIndex: 1,
+      limit: 10
+    },
+    desc: '获取保养工单列表'
+  },
+  {
+    name: 'getMaintainDetail',
+    method: 'POST',
+    path: '/SO/ChargInfo/ScanMaintainDetail',
+    params: {
+      code: '', // 订单编号
+      openid: '',
+      stakeCode: ''
+    },
+    desc: '获取待保养充电桩详情'
+  },
 ]

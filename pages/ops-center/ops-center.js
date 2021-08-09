@@ -183,6 +183,9 @@ Page({
           })
           break
         case this.data.TICKETS_TYPE_MAINTAIN:
+          wx.navigateTo({
+            url: '/pages/ops-maintain/ops-maintain'
+          })
           break
       }
     })

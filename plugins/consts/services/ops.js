@@ -71,6 +71,25 @@ const repairType = [
   }
 ]
 
+// 保养状态
+const maintainType = [
+  // 待保养
+  {
+    name: 'MAINTAIN_TYPE_WAIT',
+    value: 0
+  },
+  // 保养中
+  {
+    name: 'MAINTAIN_TYPE_DOING',
+    value: 1
+  },
+  // 保养完成
+  {
+    name: 'MAINTAIN_TYPE_DONE',
+    value: 2
+  }
+]
+
 export default [
   {
     name: 'TICKETS_TYPE',
@@ -91,5 +110,10 @@ export default [
     name: 'REPAIR_TYPE',
     value: constMapToObj(repairType)
   },
-  ...repairType
+  ...repairType,
+  {
+    name: 'MAINTAIN_TYPE',
+    value: constMapToObj(maintainType)
+  },
+  ...maintainType
 ]

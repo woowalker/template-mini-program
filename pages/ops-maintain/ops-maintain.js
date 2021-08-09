@@ -1,13 +1,13 @@
-// pages/ops-repair/ops-repair.js
+// pages/ops-maintain/ops-maintain.js
 import scanCode from '../../utils/scanCode'
 
 const app = getApp()
 
 Page({
   data: {
-    // REPAIR_TYPE_DOING REPAIR_TYPE_DONE
-    ...app.$consts['OPS/REPAIR_TYPE'],
-    repairs: [],
+    // MAINTAIN_TYPE_WAIT MAINTAIN_TYPE_DOING MAINTAIN_TYPE_DONE
+    ...app.$consts['OPS/MAINTAIN_TYPE'],
+    maintains: [],
     autoLoaded: false,
     pagination: {
       pageIndex: 1,
@@ -16,7 +16,7 @@ Page({
   },
 
   onLoad() {
-    app.$$EE.addListener(app.$consts['COMMON/EVENT_OPS_REPAIR_UPDATE'], this.handleSocketUpdate)
+    app.$$EE.addListener(app.$consts['COMMON/EVENT_OPS_MAINTAIN_UPDATE'], this.handleSocketUpdate)
   },
 
   onShow() {
@@ -27,14 +27,14 @@ Page({
         limit: pageIndex * limit
       }
       // 扫码激活返回后，更新列表数据
-      this.getRepairs(false, pageParams).then(res => {
-        this.setData({ repairs: res.Data })
+      this.getMaintains(false, pageParams).then(res => {
+        this.setData({ maintains: res.Data })
       })
     }
   },
 
   onUnload() {
-    app.$$EE.removeListener(app.$consts['COMMON/EVENT_OPS_ACTIVATE_UPDATE'], this.handleSocketUpdate)
+    app.$$EE.removeListener(app.$consts['COMMON/EVENT_OPS_MAINTAIN_UPDATE'], this.handleSocketUpdate)
   },
 
   handleSocketUpdate(msg) {
@@ -48,13 +48,13 @@ Page({
     })
   },
 
-  navToRepair(evt) {
+  navToMaintain(evt) {
     const { value } = evt.currentTarget.dataset
-    const repair = this.data.repairs.find(item => item.code === value)
-    wx.navigateTo({ url: `/pages/ops-repairdetail/ops-repairdetail?code=${repair.code}&stakeCode=${repair.stakeCode}` })
+    const maintain = this.data.maintains.find(item => item.code === value)
+    wx.navigateTo({ url: `/pages/ops-maintaindetail/ops-maintaindetail?code=${maintain.code}&stakeCode=${maintain.stakeCode}` })
   },
 
-  scanToRepair() {
+  scanToMaintain() {
     scanCode().then(res => {
       if (res.path) {
         const url = res.path.substring(0, 1) !== '/' ? `/${res.path}` : res.path
@@ -68,17 +68,17 @@ Page({
   },
 
   /**
-   * 获取维修工单记录
+   * 获取保养工单记录
    * @param {boolean} silent 静默获取数据
    * @param {Object} pagination 分页参数
    */
-  getRepairs(silent = true, pagination) {
+  getMaintains(silent = true, pagination) {
     return app.getUserInfo().then(userinfo => {
       return new Promise((resolve, reject) => {
         !silent && app.showLoading()
 
         const pageParams = pagination || this.data.pagination
-        app.$api['ops/getRepairs'](
+        app.$api['ops/getMaintains'](
           { openid: userinfo.openid, ...pageParams },
           { fullData: true }
         ).then(res => {
@@ -102,9 +102,9 @@ Page({
       pagination: evt.detail.pagination
     }, () => {
       evt.detail.promise(
-        this.getRepairs()
+        this.getMaintains()
           .then(res => {
-            this.setData({ repairs: res.Data })
+            this.setData({ maintains: res.Data })
             return res
           })
       )
@@ -120,9 +120,9 @@ Page({
       pagination: evt.detail.pagination
     }, () => {
       evt.detail.promise(
-        this.getRepairs()
+        this.getMaintains()
           .then(res => {
-            this.setData({ repairs: this.data.repairs.concat(res.Data) })
+            this.setData({ maintains: this.data.maintains.concat(res.Data) })
             return res
           })
       )

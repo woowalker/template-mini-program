@@ -21,7 +21,8 @@
     "pages/ops-activate/ops-activate",
     "pages/ops-scanactive/ops-scanactive",
     "pages/ops-repair/ops-repair",
-    "pages/ops-repairdetail/ops-repairdetail"
+    "pages/ops-repairdetail/ops-repairdetail",
+    "pages/ops-maintain/ops-maintain"
   ],
   "usingComponents": {
     "mp-dialog": "weui-miniprogram/dialog/dialog",

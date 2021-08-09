@@ -1,0 +1,33 @@
+<c-scroller
+  bind:refresh="onRefresh"
+  bind:loadmore="onLoadMore"
+  class="refOfScroller">
+  <view
+    wx:for="{{maintains}}"
+    wx:key="code"
+    data-value="{{item.code}}"
+    bindtap="navToMaintain"
+    hover-class="hover-class"
+    class="maintain bg-fff box-shadow bra-4px">
+    <view class="full-width overflow-hidden">
+      <text class="maintain__title fl fz-28 cr-333">工单编号：</text>
+      <text class="maintain__detail fl fz-28 cr-333 text-ellipsis pd-l10">{{item.code}}</text>
+    </view>
+    <view class="full-width overflow-hidden">
+      <text class="maintain__title fl fz-28 cr-333">分配时间：</text>
+      <text class="maintain__detail fl fz-28 cr-333 text-ellipsis pd-l10">{{item.st}}</text>
+    </view>
+    <view class="full-width overflow-hidden">
+      <text class="maintain__title fl fz-28 cr-333">设备编号：</text>
+      <text class="maintain__detail fl fz-28 cr-333 text-ellipsis pd-l10">{{item.stakeCode}}</text>
+    </view>
+    <text class="maintain__status fz-28" style="color: {{item.status === MAINTAIN_TYPE_WAIT ? '#4B8AEB' : item.status === MAINTAIN_TYPE_DOING ? '#D7D113' : '#2DD32D'}}">{{item.status === MAINTAIN_TYPE_WAIT ? '待保养' : item.status === MAINTAIN_TYPE_DOING ? '保养中' : '保养完成'}}</text>
+  </view>
+</c-scroller>
+
+<view
+  bindtap="scanToMaintain"
+  hover-class="hover-class"
+  class="maintain__btn">
+  <c-imager src="/images/ops/scan-code.png" class="full-container" />
+</view>
