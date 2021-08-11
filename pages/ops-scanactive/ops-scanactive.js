@@ -6,19 +6,37 @@ const app = getApp()
 Page({
   data: {
     activate: {},
-    sequence: ''
+    sequence: '',
+    // 是否从激活工单列表跳转过来，否则跳回运维中心首页
+    fromPage: ''
   },
 
   onLoad(params) {
-    // scene 是小程序码，普通二维码进来是带 code
-    const scene = params.scene ? queryString.parse(decodeURIComponent(params.scene)) : { sequence: params.sequence }
-    // 兼容带进来的属性是 id 情况
-    this.setData({ sequence: scene.sequence || scene.id })
-
+    // 解析路由参数
+    const q = params.q ? queryString.parseUrl(decodeURIComponent(params.q)).query : { sequence: params.sequence }
+    this.setData({ sequence: q.sequence, fromPage: params.fromPage })
+    // 接收激活列表工单参数
     this.getOpenerEventChannel().on(
       app.$consts['COMMON/EVENT_NAV_PAGE'],
       ({ activate }) => this.setData({ activate })
     )
+  },
+
+  onShow() {
+    // 不是从激活工单跳转过来，而是直接微信扫码跳转的，重定向到运维首页
+    if (this.data.fromPage !== 'ops-activate') {
+      wx.showModal({
+        title: '错误',
+        content: '未检测到工单编码，请从运维中心首页进入',
+        showCancel: false,
+        confirmText: '返回首页',
+        complete: () => {
+          wx.reLaunch({
+            url: '/pages/ops-center/ops-center'
+          })
+        }
+      })
+    }
   },
 
   handleActiveCancel() {

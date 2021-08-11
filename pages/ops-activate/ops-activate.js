@@ -1,5 +1,6 @@
 // pages/ops-activate/ops-activate.js
 import scanCode from '../../utils/scanCode'
+import queryString from 'query-string'
 
 const app = getApp()
 
@@ -14,6 +15,7 @@ Page({
       limit: 10
     }
   },
+
   onLoad() {
     app.$$EE.addListener(app.$consts['COMMON/EVENT_OPS_ACTIVATE_UPDATE'], this.handleSocketUpdate)
   },
@@ -51,11 +53,17 @@ Page({
     const { value } = evt.currentTarget.dataset
     const activate = this.data.activates.find(item => item.code === value)
     scanCode().then(res => {
-      if (res.path) {
-        const url = res.path.substring(0, 1) !== '/' ? `/${res.path}` : res.path
-        wx.navigateTo({ url }).then(event => {
-          event.eventChannel.emit(app.$consts['COMMON/EVENT_NAV_PAGE'], { activate })
-        })
+      if (res?.result) {
+        const query = queryString.parseUrl(res.result).query
+        if (query.sequence) {
+          wx.navigateTo({
+            url: `/pages/ops-scanactive/ops-scanactive?sequence=${query.sequence}&fromPage=ops-activate`
+          }).then(evt => {
+            evt.eventChannel.emit(app.$consts['COMMON/EVENT_NAV_PAGE'], { activate })
+          })
+        } else {
+          app.showToast('识别失败', 'error')
+        }
       } else {
         app.showToast('识别失败', 'error')
       }
