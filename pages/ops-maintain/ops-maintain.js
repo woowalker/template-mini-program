@@ -1,5 +1,6 @@
 // pages/ops-maintain/ops-maintain.js
 import scanCode from '../../utils/scanCode'
+import queryString from 'query-string'
 
 const app = getApp()
 
@@ -56,9 +57,13 @@ Page({
 
   scanToMaintain() {
     scanCode().then(res => {
-      if (res.path) {
-        const url = res.path.substring(0, 1) !== '/' ? `/${res.path}` : res.path
-        wx.navigateTo({ url })
+      if (res?.result) {
+        const query = queryString.parseUrl(res.result).query
+        if (query.code) {
+          wx.navigateTo({ url: `/pages/ops-maintaindetail/ops-maintaindetail?stakeCode=${query.code}` })
+        } else {
+          app.showToast('识别失败', 'error')
+        }
       } else {
         app.showToast('识别失败', 'error')
       }

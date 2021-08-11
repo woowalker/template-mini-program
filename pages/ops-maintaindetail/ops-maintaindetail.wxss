@@ -11,7 +11,7 @@ page {
 
 .maintain__scroller {
   width: 100%;
-  max-height: 200rpx;
+  max-height: 300rpx;
 }
 
 .maintain__checkbox {

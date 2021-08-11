@@ -13,9 +13,9 @@ Page({
   },
 
   onLoad(params) {
-    if (params.scene) {
-      const scene = queryString.parse(decodeURIComponent(params.scene))
-      this.setData({ stakeCode: scene.code })
+    if (params.q) {
+      const q = queryString.parseUrl(decodeURIComponent(params.q)).query
+      this.setData({ stakeCode: q.stakeCode })
     } else {
       this.setData({ code: params.code, stakeCode: params.stakeCode })
     }
