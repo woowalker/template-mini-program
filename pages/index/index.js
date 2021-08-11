@@ -1,5 +1,6 @@
 // pages/index/index.js
 import scanCode from '../../utils/scanCode'
+import queryString from 'query-string'
 
 const app = getApp()
 
@@ -77,19 +78,25 @@ Page({
   charging() {
     app.getUserOrdering().then(() => {
       scanCode().then(res => {
-        if (res.path) {
-          const url = res.path.substring(0, 1) !== '/' ? `/${res.path}` : res.path
-          wx.navigateTo({ url })
+        if (res?.result) {
+          const query = queryString.parseUrl(res.result).query
+          if (query.code) {
+            wx.navigateTo({ url: '/pages/stake/stake?code=' + query.code })
+          } else {
+            this.scanError()
+          }
         } else {
-          app.showToast('未检测到桩号', 'error').then(() => {
-            this.setData({ visible: true })
-          })
+          this.scanError()
         }
       }).catch(() => {
-        app.showToast('未检测到桩号', 'error').then(() => {
-          this.setData({ visible: true })
-        })
+        this.scanError()
       })
+    })
+  },
+
+  scanError() {
+    app.showToast('未检测到桩号', 'error').then(() => {
+      this.setData({ visible: true })
     })
   },
 
