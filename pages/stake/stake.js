@@ -42,10 +42,8 @@ Page({
   },
 
   onLoad(params) {
-    // scene 是小程序码，普通二维码进来是带 code
-    const scene = params.scene ? queryString.parse(decodeURIComponent(params.scene)) : { code: params.code }
-    // 兼容带进来的属性是 id 情况
-    this.setData({ stakeCode: scene.code || scene.id })
+    const q = params.q ? queryString.parseUrl(decodeURIComponent(params.q)).query : { code: params.code }
+    this.setData({ stakeCode: q.code })
     if (!app.data.sessionCheckDone) {
       app.$$EE.addListener(app.$consts['COMMON/EVENT_SESSION_CHECK_DONE'], this.getData)
     }
@@ -92,6 +90,13 @@ Page({
              * 那么以进行中订单返回的充电桩详情为准
              */
             this.setData({ stake: stakeOrdering || stake })
+          }).catch(() => {
+            this.setData({
+              emptyOption: {
+                loading: false,
+                font: '暂无设备信息'
+              }
+            })
           }).finally(() => {
             resolve()
           })
