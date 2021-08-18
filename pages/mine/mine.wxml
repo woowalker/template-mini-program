@@ -15,7 +15,7 @@
     <view class="charge-card pos-relative box-shadow mg-t20">
       <c-imager src="/images/mine/ecard-bg.png" class="charge-card__bg" />
       <view class="charge-card__title">
-        <text class="fz-24 cr-fff">运营商充电卡</text>
+        <text class="fz-24 cr-fff">{{eCard ? eCard.tenantName : '运营商充电卡'}}</text>
         <text class="fz-24 cr-fff">卡号：{{eCard ? eCard.cardNo : '****....****'}}</text>
       </view>
       <view class="charge-card__amount">
