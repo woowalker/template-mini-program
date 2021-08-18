@@ -114,7 +114,7 @@ Page({
   onLoadMore(evt) {
     const isbuy = evt.detail.extraData === 'myCards'
     evt.detail.promise(
-      this.getCards(evt.detail.pagination)
+      this.getCards(isbuy, evt.detail.pagination)
         .then(res => {
           isbuy ? this.setData({ myCards: this.data.myCards.concat(this.checkData(res.Data)) }) : this.setData({ salesCards: this.data.salesCards.concat(this.checkData(res.Data)) })
           return res
