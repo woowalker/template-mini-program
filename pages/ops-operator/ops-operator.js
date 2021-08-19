@@ -66,10 +66,7 @@ Page({
     const findIndex = copyTenants.findIndex(item => item.tenantCode === value)
     app.getUserInfo().then(userinfo => {
       wx.requestSubscribeMessage({
-        tmplIds: [
-          app.$consts['COMMON/SUBSCRIBE_OPS_NEWJOB'],
-          app.$consts['COMMON/SUBSCRIBE_OPS_APPLY_RESULT']
-        ],
+        tmplIds: [app.$consts['COMMON/SUBSCRIBE_OPS_APPLY_RESULT']],
         complete: () => {
           app.$api['ops/applyForOPS']({
             openid: userinfo.openid,

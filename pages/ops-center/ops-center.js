@@ -110,7 +110,6 @@ Page({
         // 当前页面为非列表页，则 toast 提醒
         let matchPage = false
         const pages = getCurrentPages()
-        console.log('pages[pages.length - 1].route', pages[pages.length - 1].route)
         // 处理 socket 消息
         const { Description, Updates } = Data
         Updates.forEach(item => {
@@ -178,24 +177,29 @@ Page({
       return
     }
     app.getUserInfo().then(() => {
-      const { value } = evt.currentTarget.dataset
-      switch (value) {
-        case this.data.TICKETS_TYPE_ACTIVATE:
-          wx.navigateTo({
-            url: '/pages/ops-activate/ops-activate'
-          })
-          break
-        case this.data.TICKETS_TYPE_REPAIR:
-          wx.navigateTo({
-            url: '/pages/ops-repair/ops-repair'
-          })
-          break
-        case this.data.TICKETS_TYPE_MAINTAIN:
-          wx.navigateTo({
-            url: '/pages/ops-maintain/ops-maintain'
-          })
-          break
-      }
+      wx.requestSubscribeMessage({
+        tmplIds: [app.$consts['COMMON/SUBSCRIBE_OPS_NEWJOB']],
+        complete: () => {
+          const { value } = evt.currentTarget.dataset
+          switch (value) {
+            case this.data.TICKETS_TYPE_ACTIVATE:
+              wx.navigateTo({
+                url: '/pages/ops-activate/ops-activate'
+              })
+              break
+            case this.data.TICKETS_TYPE_REPAIR:
+              wx.navigateTo({
+                url: '/pages/ops-repair/ops-repair'
+              })
+              break
+            case this.data.TICKETS_TYPE_MAINTAIN:
+              wx.navigateTo({
+                url: '/pages/ops-maintain/ops-maintain'
+              })
+              break
+          }
+        }
+      })
     })
   }
 })
