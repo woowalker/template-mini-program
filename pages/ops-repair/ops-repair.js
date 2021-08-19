@@ -35,7 +35,7 @@ Page({
   },
 
   onUnload() {
-    app.$$EE.removeListener(app.$consts['COMMON/EVENT_OPS_ACTIVATE_UPDATE'], this.handleSocketUpdate)
+    app.$$EE.removeListener(app.$consts['COMMON/EVENT_OPS_REPAIR_UPDATE'], this.handleSocketUpdate)
   },
 
   handleSocketUpdate(msg) {

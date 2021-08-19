@@ -107,26 +107,34 @@ Page({
     if (data) {
       const { TypeCode, Data } = JSON.parse(data)
       if (TypeCode === 'MT001' && Data) {
+        // 当前页面为非列表页，则 toast 提醒
+        let matchPage = false
+        const pages = getCurrentPages()
+        console.log('pages[pages.length - 1].route', pages[pages.length - 1].route)
+        // 处理 socket 消息
         const { Description, Updates } = Data
         Updates.forEach(item => {
           switch (item.orderType) {
             case this.data.TICKETS_TYPE_ACTIVATE:
-              app.$$EE.emit(app.$consts['COMMON/EVENT_OPS_ACTIVATE_UPDATE'], Description)
+              matchPage = pages[pages.length - 1].route === 'pages/ops-activate/ops-activate'
+              matchPage && app.$$EE.emit(app.$consts['COMMON/EVENT_OPS_ACTIVATE_UPDATE'], Description)
               break
             case this.data.TICKETS_TYPE_REPAIR:
-              app.$$EE.emit(app.$consts['COMMON/EVENT_OPS_REPAIR_UPDATE'], Description)
+              matchPage = pages[pages.length - 1].route === 'pages/ops-repair/ops-repair'
+              matchPage && app.$$EE.emit(app.$consts['COMMON/EVENT_OPS_REPAIR_UPDATE'], Description)
               break
             case this.data.TICKETS_TYPE_MAINTAIN:
-              app.$$EE.emit(app.$consts['COMMON/EVENT_OPS_MAINTAIN_UPDATE'], Description)
+              matchPage = pages[pages.length - 1].route === 'pages/ops-maintain/ops-maintain'
+              matchPage && app.$$EE.emit(app.$consts['COMMON/EVENT_OPS_MAINTAIN_UPDATE'], Description)
               break
             case this.data.TICKETS_TYPE_AUDIT_STATUS:
-              app.$$EE.emit(app.$consts['COMMON/EVENT_OPS_AUDITSTATUS_UPDATE'], Description)
+              matchPage = pages[pages.length - 1].route === 'pages/ops-operator/ops-operator'
+              matchPage && app.$$EE.emit(app.$consts['COMMON/EVENT_OPS_AUDITSTATUS_UPDATE'], Description)
               break
           }
         })
-        // 当前页面为运维中心首页，则 toast 提醒
-        const pages = getCurrentPages()
-        pages.length <= 1 && app.showToast(Description, 'none', false, 5000)
+
+        !matchPage && app.showToast(Description, 'none', false, 5000)
         // 强震动提醒
         wx.vibrateLong()
         // 更新首页数据
