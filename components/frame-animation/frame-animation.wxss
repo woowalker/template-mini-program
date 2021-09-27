@@ -19,9 +19,10 @@
 }
 
 .c-frame-animation__container {
+  position: relative;
   background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 0 10px 2px rgba(0,0,0,0.3);
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.3);
 }
 
 .c-frame-animation__img {
@@ -35,4 +36,13 @@
 
 .c-frame-animation__img.active {
   opacity: 1;
+}
+
+.c-frame-animation__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 25px;
+  height: 25px;
+  transform: rotateZ(45deg);
 }

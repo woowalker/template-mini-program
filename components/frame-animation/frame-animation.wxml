@@ -10,5 +10,8 @@
     <view class="text-center pd-b20">
       <text class="fz-28 cr-666">{{text}}</text>
     </view>
+    <view bindtap="stop" class="c-frame-animation__close">
+      <mp-icon type="field" icon="add" color="#666666" size="{{25}}"></mp-icon>
+    </view>
   </view>
 </view>
