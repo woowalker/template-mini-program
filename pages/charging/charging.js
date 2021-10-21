@@ -1,6 +1,7 @@
 // pages/charging/charging.js
 import Socket from '../../utils/socket'
 import config from '../../plugins/api/config'
+import dayjs from 'dayjs'
 
 const app = getApp()
 
@@ -16,9 +17,11 @@ Page({
         stakeCode: '加载中...'
       },
       amount: 0.00, // 预估金额
-      time: '00:00:00', // 已充时长
+      time: '', // 充电开始时间
       used: 0 // 用电量
     },
+    // 已充时长
+    chargingTime: null,
     // 充电模式与时长金额
     chargeModeFont: '充满',
     // 支付
@@ -29,6 +32,8 @@ Page({
     show: false,
     loadingText: '硬件通信中...'
   },
+
+  timer: -1,
 
   onLoad() {
     const socketIns = new Socket({
@@ -47,6 +52,31 @@ Page({
   onUnload() {
     const { socketIns } = this.data
     socketIns && socketIns.close()
+    this.stopTimeCount()
+  },
+
+  checkChargingTime(startTime) {
+    if (!startTime) {
+      this.setData({ chargingTime: '00:00:00' })
+      return
+    }
+
+    const diff = dayjs().diff(startTime, 'second')
+    const hours = Math.floor(diff / 3600)
+    const minutes = Math.floor((diff - hours * 3600) / 60)
+    const seconds = diff - hours * 3600 - minutes * 60
+    const chargingTime = `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds}`
+    this.setData({ chargingTime })
+  },
+
+  startTimeCount() {
+    this.timer = setInterval(() => {
+      this.checkChargingTime(this.data.detail.time)
+    }, 1000)
+  },
+
+  stopTimeCount() {
+    clearInterval(this.timer)
   },
 
   handleSocketOpen(ins) {
@@ -71,6 +101,11 @@ Page({
         this.setData({ show: false })
 
         const { status, message, data: detail } = Data
+        // 停止前端计时，并计算充电时长
+        this.stopTimeCount()
+        this.checkChargingTime(detail.time)
+
+        // 检测订单状态
         if (detail && detail.orderStatus === app.$consts['CHARGE/ORDER_STATUS_UNPAY']) {
           wx.showModal({
             title: '充电已结束',
@@ -107,6 +142,8 @@ Page({
           })
           return
         }
+
+        // 充电中
         const { chargeMode, chargeMoney, chargeTime } = detail
         let chargeModeFont
         switch (chargeMode) {
@@ -123,7 +160,7 @@ Page({
         this.setData({
           detail,
           chargeModeFont
-        })
+        }, this.startTimeCount)
       }
     }
   },

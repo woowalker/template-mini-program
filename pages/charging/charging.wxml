@@ -11,7 +11,7 @@
   <c-imager src="/images/charging/charging-car.png" class="charging-car" />
   <view class="charging-detail">
     <text class="charging-detail__font fz-36 cr-333 mg-b60">已充时长</text>
-    <text class="charging-detail__font fz-40 cr-333 fw-bold mg-b100">{{detail.time}}</text>
+    <text class="charging-detail__font fz-40 cr-333 fw-bold mg-b100">{{chargingTime || '00:00:00'}}</text>
     <text class="charging-detail__font fz-36 cr-333 mg-b60">预估电量</text>
     <text class="charging-detail__font fz-40 cr-333 fw-bold text-ellipsis mg-b100">{{detail.used}}Kwh</text>
     <text class="charging-detail__font fz-36 cr-333 mg-b60">预估费用</text>
