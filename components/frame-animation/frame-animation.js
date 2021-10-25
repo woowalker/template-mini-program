@@ -22,7 +22,7 @@ Component({
     },
     duration: {
       type: Number,
-      value: 2000
+      value: 800
     },
     style: {
       type: String,
@@ -48,6 +48,8 @@ Component({
   observers: {
     show: function (show) {
       if (show) {
+        if (this.data.visible) return
+        clearTimeout(this.data.delayTimer)
         const delayTimer = setTimeout(() => { this.start() }, this.data.delay)
         this.setData({ delayTimer })
       } else {
@@ -67,7 +69,7 @@ Component({
         }
       })
     },
-    detached: function() {
+    detached: function () {
       clearTimeout(this.data.delayTimer)
       clearInterval(this.data.timer)
     }
