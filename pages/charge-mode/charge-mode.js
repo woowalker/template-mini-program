@@ -57,15 +57,19 @@ Page({
   },
 
   navToCharging() {
-    const { stake, chargeMode, chargeMoney, chargeTime } = this.data
+    const { stake, chargeMode, chargeMoney, chargeTime, presetChargeTimes } = this.data
 
-    let errMsg
+    let errMsg, presetChargingTime
     switch (chargeMode) {
       case app.$consts['CHARGE/CHARGE_MODE_MONEY']:
         !chargeMoney && (errMsg = '请输入充电金额')
         break;
       case app.$consts['CHARGE/CHARGE_MODE_TIME']:
-        !chargeTime && (errMsg = '请选择充电时长')
+        if (chargeTime) {
+          presetChargingTime = presetChargeTimes[chargeTime].value
+        } else {
+          errMsg = '请选择充电时长'
+        }
         break
       default:
         break;
@@ -89,7 +93,7 @@ Page({
               stakeCode: stake.stakeCode,
               chargeMode,
               chargeMoney,
-              chargeTime
+              chargeTime: presetChargingTime
             },
             { fullData: true }
           ).then(data => {
