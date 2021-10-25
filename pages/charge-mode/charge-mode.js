@@ -20,6 +20,8 @@ Page({
     ]
   },
 
+  chargingBtnDisabled: false,
+
   onLoad() {
     this.getOpenerEventChannel().on(
       app.$consts['COMMON/EVENT_NAV_PAGE'],
@@ -73,6 +75,9 @@ Page({
       return
     }
 
+    if (this.chargingBtnDisabled) return
+
+    this.chargingBtnDisabled = true
     app.getUserInfo().then(userinfo => {
       wx.requestSubscribeMessage({
         tmplIds: [app.$consts['COMMON/SUBSCRIBE_STOP_CHARGING']],
@@ -93,6 +98,8 @@ Page({
                 url: '/pages/charging/charging'
               })
             }
+          }).finally(() => {
+            this.chargingBtnDisabled = false
           })
         }
       })
