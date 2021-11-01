@@ -49,6 +49,10 @@ Page({
     })
   },
 
+  scanError() {
+    app.showToast('未检测到桩号', 'error')
+  },
+
   scanToActivate(evt) {
     const { value } = evt.currentTarget.dataset
     const activate = this.data.activates.find(item => item.code === value)
@@ -62,13 +66,13 @@ Page({
             evt.eventChannel.emit(app.$consts['COMMON/EVENT_NAV_PAGE'], { activate })
           })
         } else {
-          app.showToast('识别失败', 'error')
+          this.scanError()
         }
       } else {
-        app.showToast('识别失败', 'error')
+        this.scanError()
       }
     }).catch(() => {
-      app.showToast('识别失败', 'error')
+      this.scanError()
     })
   },
 

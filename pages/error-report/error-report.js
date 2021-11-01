@@ -1,5 +1,6 @@
 // pages/error-report/error-report.js
 import scanCode from '../../utils/scanCode'
+import queryString from 'query-string'
 import config from '../../plugins/api/config'
 
 const app = getApp()
@@ -22,15 +23,24 @@ Page({
     this.setData({ stakeCode: evt.detail.value })
   },
 
+  scanError() {
+    app.showToast('未检测到桩号', 'error')
+  },
+
   handleScancode() {
     scanCode().then(res => {
-      if (res.path && res.path.indexOf('=') !== -1) {
-        this.setData({ stakeCode: res.path.split('=')[1] })
+      if (res?.result) {
+        const query = queryString.parseUrl(res.result).query
+        if (query.code) {
+          this.setData({ stakeCode: query.code })
+        } else {
+          this.scanError()
+        }
       } else {
-        app.showToast('未检测到桩号', 'error')
+        this.scanError()
       }
     }).catch(() => {
-      app.showToast('未检测到桩号', 'error')
+      this.scanError()
     })
   },
 

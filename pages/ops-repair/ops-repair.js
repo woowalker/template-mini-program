@@ -55,6 +55,10 @@ Page({
     wx.navigateTo({ url: `/pages/ops-repairdetail/ops-repairdetail?code=${repair.code}&stakeCode=${repair.stakeCode}` })
   },
 
+  scanError() {
+    app.showToast('未检测到桩号', 'error')
+  },
+
   scanToRepair() {
     scanCode().then(res => {
       if (res?.result) {
@@ -62,13 +66,13 @@ Page({
         if (query.code) {
           wx.navigateTo({ url: `/pages/ops-repairdetail/ops-repairdetail?stakeCode=${query.code}` })
         } else {
-          app.showToast('识别失败', 'error')
+          this.scanError()
         }
       } else {
-        app.showToast('识别失败', 'error')
+        this.scanError()
       }
     }).catch(() => {
-      app.showToast('识别失败', 'error')
+      this.scanError()
     })
   },
 

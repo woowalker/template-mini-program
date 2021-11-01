@@ -42,7 +42,6 @@
   buttons="{{buttons}}">
   <c-cell-input
     focus
-    type="number"
     title="充电桩号"
     value="{{stakeCode}}"
     bindinput="handleCustomInput"

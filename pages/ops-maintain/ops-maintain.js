@@ -55,6 +55,10 @@ Page({
     wx.navigateTo({ url: `/pages/ops-maintaindetail/ops-maintaindetail?code=${maintain.code}&stakeCode=${maintain.stakeCode}` })
   },
 
+  scanError() {
+    app.showToast('未检测到桩号', 'error')
+  },
+
   scanToMaintain() {
     scanCode().then(res => {
       if (res?.result) {
@@ -62,13 +66,13 @@ Page({
         if (query.code) {
           wx.navigateTo({ url: `/pages/ops-maintaindetail/ops-maintaindetail?stakeCode=${query.code}` })
         } else {
-          app.showToast('识别失败', 'error')
+          this.scanError()
         }
       } else {
-        app.showToast('识别失败', 'error')
+        this.scanError()
       }
     }).catch(() => {
-      app.showToast('识别失败', 'error')
+      this.scanError()
     })
   },
 
