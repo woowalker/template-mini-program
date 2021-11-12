@@ -2,7 +2,7 @@
   <view class="c-frame-animation__container">
     <view class="pos-relative" style="{{style}}">
       <image
-        wx:for="{{frames}}"
+        wx:for="{{assets}}"
         wx:key="*this"
         src="{{item}}"
         class="c-frame-animation__img {{curr === index ? 'active' : ''}}" />

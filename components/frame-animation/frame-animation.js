@@ -14,7 +14,16 @@ Component({
     },
     assets: {
       type: String,
-      value: '/images/frames/car'
+      value: [
+        '/images/frames/car/Bus_00000.png',
+        '/images/frames/car/Bus_00004.png',
+        '/images/frames/car/Bus_00012.png',
+        '/images/frames/car/Bus_00016.png',
+        '/images/frames/car/Bus_00024.png',
+        '/images/frames/car/Bus_00028.png',
+        '/images/frames/car/Bus_00036.png',
+        '/images/frames/car/Bus_00040.png',
+      ]
     },
     delay: {
       type: Number,
@@ -38,7 +47,6 @@ Component({
    * 组件的初始数据
    */
   data: {
-    frames: [],
     curr: 0,
     visible: false,
     delayTimer: -1,
@@ -59,16 +67,6 @@ Component({
   },
 
   lifetimes: {
-    attached: function () {
-      const fs = wx.getFileSystemManager()
-      fs.readdir({
-        dirPath: this.data.assets,
-        success: (res) => {
-          const frames = res.files.map(item => `${this.data.assets}/${item}`)
-          this.setData({ frames })
-        }
-      })
-    },
     detached: function () {
       clearTimeout(this.data.delayTimer)
       clearInterval(this.data.timer)
@@ -82,9 +80,9 @@ Component({
     start: function () {
       const timer = setInterval(() => {
         let newCurr = this.data.curr + 1
-        newCurr > this.data.frames.length - 1 && (newCurr = 0)
+        newCurr > this.data.assets.length - 1 && (newCurr = 0)
         this.setData({ curr: newCurr })
-      }, this.data.duration / this.data.frames.length)
+      }, this.data.duration / this.data.assets.length)
       this.setData({ timer, visible: new Date().getTime() })
     },
     stop: function () {
