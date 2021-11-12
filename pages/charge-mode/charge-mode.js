@@ -86,6 +86,7 @@ Page({
       wx.requestSubscribeMessage({
         tmplIds: [app.$consts['COMMON/SUBSCRIBE_STOP_CHARGING']],
         complete: () => {
+          app.showLoading()
           app.$api['charge/charging'](
             {
               clientId: userinfo.id,
@@ -103,6 +104,7 @@ Page({
               })
             }
           }).finally(() => {
+            app.hideLoading()
             this.chargingBtnDisabled = false
           })
         }
