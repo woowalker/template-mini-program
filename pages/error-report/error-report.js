@@ -90,7 +90,12 @@ Page({
           openid: userinfo.openid,
           stakeCode,
           remark
-        }, { header: { 'content-type': 'application/x-www-form-urlencoded' } }).then(res => {
+        }, {
+          header: {
+            'content-type': 'application/x-www-form-urlencoded',
+            Tenant: stakeCode.substring(0, 4)
+          }
+        }).then(res => {
           app.showToast('上报成功', null, true).then(() => {
             wx.navigateBack()
           })
