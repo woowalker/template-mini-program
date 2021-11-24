@@ -28,6 +28,10 @@ Page({
     visible: false,
     // socket
     socketIns: null,
+    // socket 是否连接成功
+    socketOpened: false,
+    // socket 当前存在正在发送的信息
+    socketSending: false,
     // loading
     show: false,
     loadingText: '硬件通信中...'
@@ -38,15 +42,18 @@ Page({
   onLoad() {
     const socketIns = new Socket({
       url: config.socketUrl,
-      onopen: (ins) => { this.handleSocketOpen(ins) },
+      onopen: (ins) => {
+        this.setData({ socketOpened: true })
+        this.handleSocketOpen(ins)
+      },
       onmessage: (data) => { this.handleSocketMsg(data) }
     })
     this.setData({ socketIns })
   },
 
   onShow() {
-    const { socketIns } = this.data
-    socketIns && this.handleSocketOpen(socketIns)
+    const { socketIns, socketOpened } = this.data
+    socketIns && socketOpened && this.handleSocketOpen(socketIns)
   },
 
   onUnload() {
@@ -80,18 +87,25 @@ Page({
   },
 
   handleSocketOpen(ins) {
-    app.getUserInfo().then(userinfo => {
-      !this.data.detail.code && this.setData({ show: true })
+    if (this.data.socketSending) return
 
-      const openedPayload = {
-        TypeCode: 'P0001',
-        Data: JSON.stringify({
-          userid: userinfo.id,
-          openid: userinfo.openid
-        })
-      }
-      ins.send({ data: JSON.stringify(openedPayload) })
-    })
+    this.setData({ socketSending: true })
+    app.getUserInfo()
+      .then(userinfo => {
+        !this.data.detail.code && this.setData({ show: true })
+
+        const openedPayload = {
+          TypeCode: 'P0001',
+          Data: JSON.stringify({
+            userid: userinfo.id,
+            openid: userinfo.openid
+          })
+        }
+        ins.send({ data: JSON.stringify(openedPayload) })
+      })
+      .finally(() => {
+        this.setData({ socketSending: false })
+      })
   },
 
   handleSocketMsg(data) {
