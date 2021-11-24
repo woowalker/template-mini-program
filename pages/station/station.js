@@ -15,6 +15,8 @@ Page({
     openid: ''
   },
 
+  orderBtnDisabled: false,
+
   onLoad() {
     const cacheNearbyPageData = wx.getStorageSync(app.$consts['COMMON/CACHE_NEARBY_PAGE_DATA'])
     cacheNearbyPageData && this.setData({
@@ -133,8 +135,12 @@ Page({
   },
 
   navToPreOrder(evt) {
+    if (this.orderBtnDisabled) return
+
     app.getUserOrdering().then(() => {
       app.getUserInfo().then(userinfo => {
+        app.showLoading()
+        this.orderBtnDisabled = true
         const { value } = evt.currentTarget.dataset
         app.$api['stake/ordering']({
           clientId: userinfo.id,
@@ -146,6 +152,9 @@ Page({
               url: '/pages/stake/stake?code=' + value
             })
           })
+        }).finally(() => {
+          app.hideLoading()
+          this.orderBtnDisabled = false
         })
       })
     })

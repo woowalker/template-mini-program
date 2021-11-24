@@ -81,12 +81,12 @@ Page({
 
     if (this.chargingBtnDisabled) return
 
-    this.chargingBtnDisabled = true
     app.getUserInfo().then(userinfo => {
       wx.requestSubscribeMessage({
         tmplIds: [app.$consts['COMMON/SUBSCRIBE_STOP_CHARGING']],
         complete: () => {
           app.showLoading()
+          this.chargingBtnDisabled = true
           app.$api['charge/charging'](
             {
               clientId: userinfo.id,
