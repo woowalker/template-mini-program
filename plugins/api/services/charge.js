@@ -16,6 +16,24 @@ export default [
     desc: '立即充电'
   },
   {
+    name: 'chargingStop',
+    method: 'POST',
+    path: '/SO/Order/EndCharging',
+    params: {
+      orderCode: ''
+    },
+    desc: '停止充电'
+  },
+  {
+    name: 'chargingDetail',
+    method: 'GET',
+    path: '/SO/Order/GetStakeOrder',
+    params: {
+      clientId: ''
+    },
+    desc: '充电中详情'
+  },
+  {
     name: 'chargeRecord',
     method: 'POST',
     path: '/SO/Order/GetOrderRecord',

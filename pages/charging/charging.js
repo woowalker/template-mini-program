@@ -1,6 +1,4 @@
 // pages/charging/charging.js
-import Socket from '../../utils/socket'
-import config from '../../plugins/api/config'
 import dayjs from 'dayjs'
 
 const app = getApp()
@@ -9,6 +7,8 @@ Page({
   data: {
     // CHARGING_STATUS_ERROR CHARGING_STATUS_CHARGING CHARGING_STATUS_DONE
     ...app.$consts['CHARGE/CHARGING_STATUS'],
+    // 用户信息
+    userinfo: {},
     // 充电详情
     detail: {
       code: '',
@@ -26,179 +26,178 @@ Page({
     chargeModeFont: '充满',
     // 支付
     visible: false,
-    // socket
-    socketIns: null,
-    // socket 是否连接成功
-    socketOpened: false,
-    // socket 当前存在正在发送的信息
-    socketSending: false,
     // loading
     show: false,
     loadingText: '硬件通信中...'
   },
 
+  // 是否被卸载
+  isUnload: false,
+
+  // 获取详情定时器
+  detailTimer: -1,
+
+  // 本地计时时长定时器
   timer: -1,
 
   onLoad() {
-    const socketIns = new Socket({
-      url: config.socketUrl,
-      onopen: (ins) => {
-        this.setData({ socketOpened: true })
-        this.handleSocketOpen(ins)
-      },
-      onmessage: (data) => { this.handleSocketMsg(data) }
+    app.getUserInfo().then(userinfo => {
+      this.setData({
+        userinfo,
+        show: true
+      }, this.getChargingDetail)
     })
-    this.setData({ socketIns })
-  },
-
-  onShow() {
-    const { socketIns, socketOpened } = this.data
-    socketIns && socketOpened && this.handleSocketOpen(socketIns)
   },
 
   onUnload() {
-    const { socketIns } = this.data
-    socketIns && socketIns.close()
+    this.isUnload = true
+    this.stopDetailCount()
     this.stopTimeCount()
   },
 
-  checkChargingTime(startTime) {
-    if (!startTime) {
-      this.setData({ chargingTime: '00:00:00' })
-      return
-    }
+  // 获取充电详情
+  getChargingDetail() {
+    if (this.isUnload) return
+
+    app.$api['charge/chargingDetail']({
+      clientId: this.data.userinfo.id
+    }).then(data => {
+      // 更新充电详情
+      const detail = data.data
+      const { chargeMode, chargeMoney, chargeTime, time } = detail
+      let chargeModeFont
+      switch (chargeMode) {
+        case app.$consts['CHARGE/CHARGE_MODE_MONEY']:
+          chargeModeFont = `固定金额 ${chargeMoney} 元`
+          break
+        case app.$consts['CHARGE/CHARGE_MODE_TIME']:
+          chargeModeFont = `固定时长 ${chargeTime}`
+          break
+        default:
+          chargeModeFont = '充满模式'
+          break
+      }
+      this.setData({
+        detail,
+        chargingTime: this.getChargingTime(time),
+        chargeModeFont
+      })
+      return data
+    }).then(data => {
+      // 检查订单状态
+      const { status, message, data: detail } = data
+      // 订单状态未支付
+      if (detail && detail.orderStatus === app.$consts['CHARGE/ORDER_STATUS_UNPAY']) {
+        this.stopTimeCount()
+        wx.showModal({
+          title: '充电已结束',
+          content: `请支付本次充电费用：${detail.amount} 元`,
+          showCancel: false,
+          confirmText: '立即支付',
+          complete: () => {
+            this.setData({ visible: true })
+          }
+        })
+        return true
+      }
+      // 订单错误
+      if (status === this.data.CHARGING_STATUS_ERROR) {
+        this.stopTimeCount()
+        wx.showModal({
+          title: '充电异常',
+          content: message,
+          showCancel: false,
+          complete: () => {
+            wx.navigateBack()
+          }
+        })
+        return true
+      }
+      // 充电结束
+      if (status === this.data.CHARGING_STATUS_DONE) {
+        this.stopTimeCount()
+        wx.showModal({
+          title: '充电已结束',
+          content: '是否立即查看充电订单'
+        }).then(res => {
+          if (res.confirm) {
+            wx.navigateTo({ url: '/pages/charge-detail/charge-detail?code=' + detail.code })
+          } else {
+            wx.navigateBack()
+          }
+        })
+        return true
+      }
+      // 订单是否完成
+      return false
+    }).then(isComplete => {
+      // 未完成则继续发起接口请求
+      if (!isComplete) {
+        // 只在接口成功后，启动本地计时以及关闭 loading 状态
+        this.timer === -1 && this.startTimeCount()
+        this.data.show && this.setData({ show: false })
+        this.startDetailCount()
+      }
+    }).catch(() => {
+      // 接口报错则继续发起接口请求
+      this.startDetailCount()
+    })
+  },
+
+  // 定时获取充电详情
+  startDetailCount() {
+    this.detailTimer = setTimeout(() => {
+      this.getChargingDetail()
+    }, 3000)
+  },
+
+  // 停止充电详情获取计时器
+  stopDetailCount() {
+    clearTimeout(this.detailTimer)
+  },
+
+  // 本地充电时长计算
+  getChargingTime(startTime) {
+    if (!startTime) return '00:00:00'
 
     const diff = dayjs().diff(startTime, 'second')
     const hours = Math.floor(diff / 3600)
     const minutes = Math.floor((diff - hours * 3600) / 60)
     const seconds = diff - hours * 3600 - minutes * 60
-    const chargingTime = `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`
-    this.setData({ chargingTime })
+    return `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`
   },
 
+  // 定时更新本地充电时长
   startTimeCount() {
     this.timer = setInterval(() => {
-      this.checkChargingTime(this.data.detail.time)
+      this.setData({
+        chargingTime: this.getChargingTime(this.data.detail.time)
+      })
     }, 1000)
   },
 
+  // 停止充电时长计时器
   stopTimeCount() {
     clearInterval(this.timer)
   },
 
-  handleSocketOpen(ins) {
-    if (this.data.socketSending) return
-
-    this.setData({ socketSending: true })
-    app.getUserInfo()
-      .then(userinfo => {
-        !this.data.detail.code && this.setData({ show: true })
-
-        const openedPayload = {
-          TypeCode: 'P0001',
-          Data: JSON.stringify({
-            userid: userinfo.id,
-            openid: userinfo.openid
-          })
-        }
-        ins.send({ data: JSON.stringify(openedPayload) })
-      })
-      .finally(() => {
-        this.setData({ socketSending: false })
-      })
-  },
-
-  handleSocketMsg(data) {
-    if (data) {
-      const { TypeCode, Data } = JSON.parse(data)
-      if (TypeCode === 'MQ01' && Data) {
-        this.setData({ show: false })
-
-        const { status, message, data: detail } = Data
-        // 停止前端计时，并计算充电时长
-        this.stopTimeCount()
-        this.checkChargingTime(detail.time)
-
-        // 检测订单状态
-        if (detail && detail.orderStatus === app.$consts['CHARGE/ORDER_STATUS_UNPAY']) {
-          wx.showModal({
-            title: '充电已结束',
-            content: `请支付本次充电费用：${detail.amount} 元`,
-            showCancel: false,
-            confirmText: '立即支付',
-            complete: () => {
-              this.setData({ detail, visible: true })
-            }
-          })
-          return
-        }
-        if (status === this.data.CHARGING_STATUS_ERROR) {
-          wx.showModal({
-            title: '充电异常',
-            content: message,
-            showCancel: false,
-            complete: () => {
-              wx.navigateBack()
-            }
-          })
-          return
-        }
-        if (status === this.data.CHARGING_STATUS_DONE) {
-          wx.showModal({
-            title: '充电已结束',
-            content: '是否立即查看充电订单'
-          }).then(res => {
-            if (res.confirm) {
-              wx.navigateTo({ url: '/pages/charge-detail/charge-detail?code=' + detail.code })
-            } else {
-              wx.navigateBack()
-            }
-          })
-          return
-        }
-
-        // 充电中
-        const { chargeMode, chargeMoney, chargeTime } = detail
-        let chargeModeFont
-        switch (chargeMode) {
-          case app.$consts['CHARGE/CHARGE_MODE_MONEY']:
-            chargeModeFont = `固定金额 ${chargeMoney} 元`
-            break
-          case app.$consts['CHARGE/CHARGE_MODE_TIME']:
-            chargeModeFont = `固定时长 ${chargeTime}`
-            break
-          default:
-            chargeModeFont = '充满模式'
-            break
-        }
-        this.setData({
-          detail,
-          chargeModeFont
-        }, this.startTimeCount)
-      }
-    }
-  },
-
+  // 停止充电
   handleChargingStop() {
-    const { detail, socketIns } = this.data
+    const { detail } = this.data
     if (!detail.code) {
       app.showToast('订单不存在', 'error')
       return
     }
-    app.getUserInfo().then(userinfo => {
-      this.setData({ show: true })
 
-      const stopPayload = {
-        TypeCode: 'MQ02',
-        Data: JSON.stringify({
-          code: detail.code,
-          openid: userinfo.openid
-        })
-      }
-      socketIns.send({ data: JSON.stringify(stopPayload) })
+    this.setData({ show: true })
+    app.$api['charge/chargingStop']({
+      orderCode: detail.code
+    }).then(data => {
+      data && this.getChargingDetail()
     })
   },
 
+  // 支付
   payed() {
     this.setData({ visible: false }, () => {
       wx.showModal({

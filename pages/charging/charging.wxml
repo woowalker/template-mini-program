@@ -1,7 +1,7 @@
 <view class="header">
   <text class="fz-24 cr-333 line-height-unset">
     <text>充电桩号</text>
-    <text class="pd-l10">{{detail.stake.stakeCode}}</text>
+    <text class="pd-l10">{{detail.stake ? detail.stake.stakeCode : ''}}</text>
     <text class="pd-l10">充电模式</text>
     <text class="pd-l10">{{chargeModeFont}}</text>
   </text>
