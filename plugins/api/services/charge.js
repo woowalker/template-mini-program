@@ -17,7 +17,7 @@ export default [
   },
   {
     name: 'chargingStop',
-    method: 'POST',
+    method: 'GET',
     path: '/SO/Order/EndCharging',
     params: {
       orderCode: ''

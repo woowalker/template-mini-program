@@ -31,6 +31,9 @@ Page({
     loadingText: '硬件通信中...'
   },
 
+  // 充电已经停止
+  chargeHasStoped: false,
+
   // 是否被卸载
   isUnload: false,
 
@@ -88,7 +91,6 @@ Page({
       const { status, message, data: detail } = data
       // 订单状态未支付
       if (detail && detail.orderStatus === app.$consts['CHARGE/ORDER_STATUS_UNPAY']) {
-        this.stopTimeCount()
         wx.showModal({
           title: '充电已结束',
           content: `请支付本次充电费用：${detail.amount} 元`,
@@ -102,7 +104,6 @@ Page({
       }
       // 订单错误
       if (status === this.data.CHARGING_STATUS_ERROR) {
-        this.stopTimeCount()
         wx.showModal({
           title: '充电异常',
           content: message,
@@ -115,28 +116,30 @@ Page({
       }
       // 充电结束
       if (status === this.data.CHARGING_STATUS_DONE) {
-        this.stopTimeCount()
         wx.showModal({
           title: '充电已结束',
           content: '是否立即查看充电订单'
         }).then(res => {
           if (res.confirm) {
-            wx.navigateTo({ url: '/pages/charge-detail/charge-detail?code=' + detail.code })
+            wx.redirectTo({ url: '/pages/charge-detail/charge-detail?code=' + detail.code })
           } else {
             wx.navigateBack()
           }
         })
         return true
       }
-      // 订单是否完成
+      // 订单未完成
       return false
     }).then(isComplete => {
       // 未完成则继续发起接口请求
       if (!isComplete) {
         // 只在接口成功后，启动本地计时以及关闭 loading 状态
         this.timer === -1 && this.startTimeCount()
-        this.data.show && this.setData({ show: false })
+        this.data.show && !this.chargeHasStoped && this.setData({ show: false })
         this.startDetailCount()
+      } else {
+        this.data.show && this.chargeHasStoped && this.setData({ show: false })
+        this.stopTimeCount()
       }
     }).catch(() => {
       // 接口报错则继续发起接口请求
@@ -189,11 +192,12 @@ Page({
       return
     }
 
+    // 接口会继续轮询，订单状态更新时，show 会被置为 false
     this.setData({ show: true })
     app.$api['charge/chargingStop']({
       orderCode: detail.code
-    }).then(data => {
-      data && this.getChargingDetail()
+    }).then(res => {
+      this.chargeHasStoped = !!res
     })
   },
 
