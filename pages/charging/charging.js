@@ -31,8 +31,8 @@ Page({
     loadingText: '硬件通信中...'
   },
 
-  // 充电已经停止
-  chargeHasStoped: false,
+  // 初次建立连接时展现 loading，之后的轮询不再显示 loading
+  initLoadingShow: false,
 
   // 是否被卸载
   isUnload: false,
@@ -45,6 +45,7 @@ Page({
 
   onLoad() {
     app.getUserInfo().then(userinfo => {
+      this.initLoadingShow = true
       this.setData({
         userinfo,
         show: true
@@ -85,6 +86,7 @@ Page({
         chargingTime: this.getChargingTime(time),
         chargeModeFont
       })
+      this.initLoadingShow && this.setData({ show: false }, () => { this.initLoadingShow = false })
       return data
     }).then(data => {
       // 检查订单状态
@@ -133,12 +135,11 @@ Page({
     }).then(isComplete => {
       // 未完成则继续发起接口请求
       if (!isComplete) {
-        // 只在接口成功后，启动本地计时以及关闭 loading 状态
+        // 只在接口成功后，启动本地计时
         this.timer === -1 && this.startTimeCount()
-        this.data.show && !this.chargeHasStoped && this.setData({ show: false })
         this.startDetailCount()
       } else {
-        this.data.show && this.chargeHasStoped && this.setData({ show: false })
+        this.data.show && this.setData({ show: false })
         this.stopTimeCount()
       }
     }).catch(() => {
@@ -196,8 +197,6 @@ Page({
     this.setData({ show: true })
     app.$api['charge/chargingStop']({
       orderCode: detail.code
-    }).then(res => {
-      this.chargeHasStoped = !!res
     })
   },
 
