@@ -30,7 +30,7 @@ Page({
 
   handleSocketUpdate(msg) {
     wx.showModal({
-      content: msg,
+      content: msg || '状态更新',
       showCancel: false,
       complete: () => {
         this.setData({ activeTab: 0 }, () => {

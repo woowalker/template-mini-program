@@ -108,7 +108,7 @@ Page({
       if (status === this.data.CHARGING_STATUS_ERROR) {
         wx.showModal({
           title: '充电异常',
-          content: message,
+          content: message || '出了点问题，请稍后再试',
           showCancel: false,
           complete: () => {
             wx.navigateBack()

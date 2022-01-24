@@ -40,7 +40,7 @@ Page({
 
   handleSocketUpdate(msg) {
     wx.showModal({
-      content: msg,
+      content: msg || '有新的激活工单',
       showCancel: false,
       confirmText: '立即刷新',
       complete: () => {
