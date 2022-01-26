@@ -66,7 +66,7 @@ Page({
 
   getData() {
     return new Promise((resolve) => {
-      app.getUserInfo({ navToLogin: false, silent: true })
+      app.getUserInfo({ navToLogin: true, silent: true })
         .then(res => {
           this.setData({ userinfo: res })
         })
