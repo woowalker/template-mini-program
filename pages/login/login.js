@@ -48,7 +48,7 @@ Page({
       this.setData({ customPhone: true })
       return
     }
-    app.getOpenid().then(openid => {
+    app.getOpenid({ forceUpdate: true }).then(openid => {
       app.showLoading()
       app.$api['home/getUserPhone']({
         openid,
