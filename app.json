@@ -85,6 +85,9 @@
       "desc": "获取当前位置附近的充电桩点需要您的位置信息"
     }
   },
+  "requiredPrivateInfos": [
+    "getLocation"
+  ],
   "networkTimeout": {
     "request": 16000
   },
